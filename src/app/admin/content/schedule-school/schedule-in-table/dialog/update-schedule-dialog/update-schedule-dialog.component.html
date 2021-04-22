@@ -1,0 +1,99 @@
+<h1 mat-dialog-title>Cập nhật lịch học</h1>
+
+<form novalidate [formGroup]="learnerFormGroup" (ngSubmit)="updateSchedule()">
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field [floatLabel]='floatLabel'>
+          <input matInput [matDatepicker]="picker" placeholder="Chọn ngày bắt đầu" [(ngModel)]="schedule.fromDate"
+            formControlName="fromDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #picker></mat-datepicker>
+          <mat-error *ngIf="!learnerFormGroup.hasError('required')">
+            Vui lòng chọn ngày bắt đầu!
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field [floatLabel]='floatLabel'>
+          <input matInput [matDatepicker]="picker1" placeholder="Chọn ngày kế thúc" [(ngModel)]="schedule.toDate"
+            formControlName="toDate">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #picker1></mat-datepicker>
+          <mat-error *ngIf="!learnerFormGroup.hasError('required')">
+            Vui lòng chọn ngày kết thúc!
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Số buổi trong tuần</mat-label>
+          <input [(ngModel)]="schedule.daysOfWeek" matInput type="number" formControlName="daysOfWeek">
+          <mat-error *ngIf="!learnerFormGroup.hasError('required')">
+            Vui lòng nhập số buổi trong tuần!
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Trạng thái</mat-label>
+          <mat-select [(ngModel)]="schedule.status" required style="text-align: center;" formControlName="status">
+            <mat-option *ngFor="let item of status" [value]="item.code" style="text-align: center;">
+              {{item.Name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline">
+          <mat-label>Giảng viên</mat-label>
+          <mat-select [(ngModel)]="schedule.lecturerId" required style="text-align: center;"
+            formControlName="lecturerId">
+            <mat-option *ngFor="let item of lecturers" [value]="item.id" style="text-align: center;">
+              {{item.firstName + " " + item.lastName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+
+        <mat-form-field appearance="outline">
+          <mat-label>Lớp học</mat-label>
+          <mat-select [(ngModel)]="schedule.languageClassId" required style="text-align: center;"
+            formControlName="languageClassId">
+            <mat-option *ngFor="let item of classes" [value]="item.id" style="text-align: center;">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Phòng học</mat-label>
+          <mat-select [(ngModel)]="schedule.classroomId" required style="text-align: center;"
+            formControlName="classroomId">
+            <mat-option *ngFor="let item of classroom" [value]="item.id" style="text-align: center;">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nội dung khóa học</mat-label>
+          <textarea [(ngModel)]="schedule.content" matInput cdkTextareaAutosize cdkAutosizeMinRows="5"
+            cdkAutosizeMaxRows="5" formControlName="content"></textarea>
+        </mat-form-field>
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <mat-dialog-actions align="end">
+    <button type="submit" mat-raised-button color="primary" tabindex="-1">
+      <mat-icon>add_circle</mat-icon>
+      Cật nhật
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">
+      <mat-icon>cancel</mat-icon>
+      Hủy
+    </button>
+  </mat-dialog-actions>
+</form>

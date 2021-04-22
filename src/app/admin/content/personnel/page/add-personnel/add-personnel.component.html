@@ -1,0 +1,196 @@
+<mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
+
+<section class="content">
+    <div class="container-fluid">
+        <mat-card>
+            <mat-card-header style="text-align: center;">
+                <h3 style="text-align: center; width: 100%;">Tạo thông tin hồ sơ nhân viên</h3>
+            </mat-card-header>
+            <div class="row">
+
+                <!-- Column 2: phần thông tin -->
+                <div class="col-md-12">
+                    <form novalidate [formGroup]="personnelFormGroup" (ngSubmit)="createPersonnel()">
+                        <mat-card>
+                            <mat-card-header>
+                                <mat-card-title align="start">
+                                    <mat-icon>assignment_ind</mat-icon>
+                                    Thông tin chung
+                                </mat-card-title>
+                            </mat-card-header>
+
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-5">
+
+                                    <mat-form-field [floatLabel]='floatLabel'>
+                                        <mat-label>Họ</mat-label>
+                                        <input matInput placeholder="Nhập họ..." required
+                                            [(ngModel)]="personnel.firstName" formControlName="firstName">
+                                    </mat-form-field>
+
+                                    <mat-form-field [floatLabel]='floatLabel'>
+                                        <mat-label>Tên</mat-label>
+                                        <input matInput placeholder="Nhập tên..." required
+                                            [(ngModel)]="personnel.lastName" formControlName="lastName">
+                                    </mat-form-field>
+
+                                    <mat-form-field [floatLabel]='floatLabel'>
+                                        <input matInput [matDatepicker]="picker" placeholder="Chọn ngày sinh"
+                                            [(ngModel)]="personnel.birthday" required formControlName="birthday">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker touchUi #picker></mat-datepicker>
+                                    </mat-form-field>
+
+                                    <label>Giới tính: </label>
+                                    <mat-radio-group [(ngModel)]="personnel.sex" formControlName="sex">
+                                        <mat-radio-button value="true">Nam</mat-radio-button>
+                                        <mat-radio-button value="false">Nữ</mat-radio-button>
+                                    </mat-radio-group>
+
+                                    <mat-form-field [floatLabel]='floatLabel'>
+                                        <mat-label>Địa chỉ</mat-label>
+                                        <textarea matInput placeholder="Nhập địa chỉ..." cdkTextareaAutosize
+                                            cdkAutosizeMinRows="3" cdkAutosizeMaxRows="3" required
+                                            [(ngModel)]="personnel.address" formControlName="address"></textarea>
+                                    </mat-form-field>
+
+                                    <mat-form-field [floatLabel]='floatLabel'>
+                                        <mat-label>Quốc gia</mat-label>
+                                        <input matInput placeholder="Nhập quốc gia..." required
+                                            [(ngModel)]="personnel.nationality" formControlName="nationality">
+                                    </mat-form-field>
+
+                                    <mat-form-field [floatLabel]='floatLabel'>
+                                        <mat-label>Email</mat-label>
+                                        <input matInput placeholder="plc@vimaru.edu.vn" required
+                                            [(ngModel)]="personnel.email" required [(ngModel)]="personnel.email"
+                                            formControlName="email">
+                                    </mat-form-field>
+
+                                    <mat-form-field [floatLabel]='floatLabel'>
+                                        <mat-label>Số liên lạc</mat-label>
+                                        <input type="number" matInput placeholder="09xx xxx xxx" required
+                                            [(ngModel)]="personnel.phone" formControlName="phone">
+                                    </mat-form-field>
+
+                                    <mat-form-field [floatLabel]='floatLabel'>
+                                        <mat-label>Facebook</mat-label>
+                                        <input matInput placeholder="https://www.facebook.com/plc-center || plc-center"
+                                            [(ngModel)]="personnel.facebook" formControlName="facebook">
+                                    </mat-form-field>
+
+                                    <mat-form-field [floatLabel]='floatLabel'>
+                                        <mat-label>Chứng chỉ</mat-label>
+                                        <input matInput placeholder="Nhập chứng chỉ" [(ngModel)]="personnel.certificate"
+                                            formControlName="certificate">
+                                    </mat-form-field>
+
+                                    <mat-form-field [floatLabel]='floatLabel'>
+                                        <mat-label>Kinh nghiệm làm việc</mat-label>
+                                        <textarea matInput placeholder="Nhập kinh nghiệm làm việc..."
+                                            cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5"
+                                            [(ngModel)]="personnel.experienceRecord"
+                                            formControlName="experienceRecord"></textarea>
+                                    </mat-form-field>
+                                </div>
+
+
+                                <div class="col-md-1">
+
+                                </div>
+
+                                <div class="col-md-5">
+
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Chức vụ</mat-label>
+                                        <mat-select [(ngModel)]="personnel.position" required
+                                            style="text-align: center;" required formControlName="position">
+                                            <mat-option *ngFor="let item of position" [value]="item.name"
+                                                style="text-align: center;">
+                                                {{item.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Tình trạng hôn nhân</mat-label>
+                                        <mat-select [(ngModel)]="personnel.marritalStatus" style="text-align: center;"
+                                            required formControlName="marritalStatus">
+                                            <mat-option *ngFor="let item of marritalStatus" [value]="item.code"
+                                                style="text-align: center;">
+                                                {{item.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Trạng thái</mat-label>
+                                        <mat-select [(ngModel)]="personnel.status" required style="text-align: center;"
+                                            required formControlName="status">
+                                            <mat-option *ngFor="let item of status" [value]="item.code"
+                                                style="text-align: center;">
+                                                {{item.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <mat-form-field [floatLabel]='floatLabel'>
+                                        <mat-label>Lương cơ bản</mat-label>
+                                        <input type="number" matInput placeholder="Nhập lương cơ bản"
+                                            [(ngModel)]="personnel.basicSalary" formControlName="basicSalary">
+                                    </mat-form-field>
+
+                                    <mat-form-field [floatLabel]='floatLabel'>
+                                        <mat-label>Phụ cấp</mat-label>
+                                        <input type="number" matInput placeholder="Nhập phụ cấp" [(ngModel)]="personnel.allowance"
+                                            formControlName="allowance">
+                                    </mat-form-field>
+                                    <mat-form-field [floatLabel]='floatLabel'>
+                                        <mat-label>Thưởng</mat-label>
+                                        <input type="number" matInput placeholder="Nhập thưởng" [(ngModel)]="personnel.bonus"
+                                            formControlName="bonus">
+                                    </mat-form-field>
+                                    <mat-form-field [floatLabel]='floatLabel'>
+                                        <mat-label>Tiền bảo hiểm</mat-label>
+                                        <input type="number" matInput placeholder="Nhập tiền bảo hiểm"
+                                            [(ngModel)]="personnel.insurancePremium" formControlName="insurancePremium">
+                                    </mat-form-field>
+
+
+
+                                    <mat-form-field [floatLabel]='floatLabel'>
+                                        <mat-label>Ghi chú</mat-label>
+                                        <textarea matInput placeholder="Nhập ghi chú liên quan..." cdkTextareaAutosize
+                                            cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" [(ngModel)]="personnel.note"
+                                            formControlName="note"></textarea>
+                                    </mat-form-field>
+
+                                </div>
+
+                                <div class="col-md-1">
+
+                                </div>
+                            </div>
+                            <hr>
+                            <mat-card-footer align="end">
+                                <button type="submit" mat-raised-button color="primary" tabindex="-1"
+                                    style="margin: 1%;">
+                                    <mat-icon>add_circle</mat-icon>
+                                    Thêm
+                                </button>
+                                <button type="button" mat-raised-button color="warn" tabindex="-1" style="margin: 1%;"
+                                    (click)="back()">
+                                    <mat-icon>cancel</mat-icon>
+                                    Hủy
+                                </button>
+                            </mat-card-footer>
+                        </mat-card>
+                    </form>
+                </div>
+
+            </div>
+
+        </mat-card>
+    </div>
+</section>

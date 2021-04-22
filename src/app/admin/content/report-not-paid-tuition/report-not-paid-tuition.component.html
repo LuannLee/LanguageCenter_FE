@@ -1,0 +1,110 @@
+<mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
+
+<div class="container-fluid">
+    <mat-card>
+        <mat-card-header class="card-container">
+            <mat-card-title style="font-size: 24px;"><b>Báo cáo chưa đóng học phí</b></mat-card-title>
+            <mat-card-subtitle style="font-size: 18px;">Báo cáo chưa đóng học phí</mat-card-subtitle>
+        </mat-card-header>
+        <div class="row">
+            <div class="col-md-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Chọn lớp</mat-label>
+                    <mat-select [(ngModel)]="classSelected" required>
+                        <mat-option *ngFor="let class of classList" value={{class.id}}>
+                            {{class.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Chọn tháng</mat-label>
+                    <mat-select [(ngModel)]="monthSelected" required>
+                        <mat-option *ngFor="let month of months" value={{month}}>
+                            {{month}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Chọn năm</mat-label>
+                    <mat-select [(ngModel)]="yearSelected" required>
+                        <mat-option *ngFor="let year of years" value={{year}}>
+                            {{year}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <button id="printClick" ngxPrint
+                    styleSheetFile="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                    printSectionId="testprint" [useExistingCss]="true" mat-raised-button color="primary" tabindex="-1"
+                    style="float: right; margin-right: 20px">
+                    <mat-icon>print</mat-icon>
+                    In báo cáo
+                </button>
+
+                <button (click)="ViewPrint()" mat-raised-button color="primary" tabindex="-1"
+                    style="float: right; margin-right: 20px">
+                    <mat-icon>pageview
+                    </mat-icon>
+                    Hiển thị
+                </button>
+            </div>
+        </div>
+    </mat-card>
+</div>
+<div class="container-fluid" *ngIf="checkView">
+    <mat-card style="margin-top: 5px; margin-bottom: 10px;" id="testprint">
+        <div style='width: 100%; float: left;'>
+            <div style='width: 50%;float: left;'>
+                <div style='width: 100%;float: left; text-align: center '>
+                    Trung Tâm Ngoại Ngữ I-English
+                </div>
+                <div style='width: 100%;float: left;  text-align: center'>
+                    ĐC: Cerella Villa, No 33, Plot 11B, Lê Hồng Phong, Đằng Hải, Hải An, Hải Phòng
+                </div>
+            </div>
+        </div>
+        <br><br><br>
+        <div style=' width: 100%; text-align: center;'>
+            <h2>DANH SÁCH CHƯA ĐÓNG HỌC PHÍ LỚP {{className | uppercase}}</h2>
+            <p style="font-size: 16px;">(Từ tháng: {{monthSelected}} - đến tháng: {{monthSelected}}/{{yearSelected}})
+            </p>
+            <br>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope='col' style="text-align: center;">STT</th>
+                            <th scope='col' style="text-align: left;">Họ và tên</th>
+                            <th scope='col' style="text-align: center;">Năm sinh</th>
+                            <th scope='col' style="text-align: center;">Giới tính</th>
+                            <th scope='col' style="text-align: center;">Điện thoại</th>
+                            <th scope='col' style="text-align: center;">Địa chỉ</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let item of receiptDetail; let i = index">
+                        <tr>
+                            <th scope='row' style="text-align: center;">{{i+1}}</th>
+                            <td style="text-align: left;">{{item.learnerName}}</td>
+                            <td style="text-align: center;">{{item.learnerBriday | date:'yyyy'}}</td>
+                            <td style="text-align: center;">{{(item.learnerSex) == true ? "Nam" : "Nữ"}}</td>
+                            <td style="text-align: center;">{{item.learnerPhone}}</td>
+                            <td style="text-align: center;">{{item.learnerAdress}}</td>                         
+                        </tr>
+                    </tbody>                  
+                </table>
+            </div>
+            <br><br><br>
+            <div style='width: 100%; float: right;'>
+                <div style='width: 30%;float: right; text-align: center;'><b>Người Lập</b><br><i>(Ký và ghi rõ họ
+                        tên)</i></div>
+            </div>
+        </div>
+    </mat-card>
+</div>

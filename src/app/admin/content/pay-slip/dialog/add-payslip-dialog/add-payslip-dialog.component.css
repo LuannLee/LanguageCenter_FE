@@ -1,0 +1,16 @@
+mat-form-field {
+    width: 100%;
+}
+
+mat-dialog-title {
+    text-align: center;
+}
+
+.numberStyle {
+    text-align: right;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }
+  

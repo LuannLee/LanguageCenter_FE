@@ -1,0 +1,202 @@
+<section class="content" style="margin-top: 1%">
+  <div class="container-fluid">
+    <div style="background-color: white;">
+      <mat-card-header class="card-container">
+        <mat-card-title style="font-size: 24px;"><b>Lớp học</b></mat-card-title>
+      </mat-card-header>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <mat-card>
+          <div class="row col-md-12" style="border-bottom: solid 1px silver; margin-bottom: 10px;">
+            <div class="row col-md-10" style=" padding-top: 8px;">
+              <div class="col-md-3" style="float: left;">
+
+              </div>
+            </div>
+            <!-- Chọn lớp học  -->
+            <div class="col-md-2">
+              <mat-form-field appearance="outline">
+                <mat-label>Chọn lớp học</mat-label>
+                <mat-select [(ngModel)]="classId" (ngModelChange)="loadForm()">
+                  <mat-option *ngFor="let s of classList" value="{{s.id}}">
+                    {{s.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class=" row col-md-12"
+            style="background-color: #F5F5F5; border: solid 1px silver ; border-radius: 10px;">
+
+            <div class="col-md-3">
+              <ul class="list-group list-group-unbordered mb-3">
+                <li class="list-group-item" style="background-color: #F5F5F5;">
+                  <b>Lớp :</b> <a class="float-right"> {{class.name}}</a>
+                </li>
+                <li class="list-group-item" style="background-color: #F5F5F5;">
+                  <b>Giáo viên :</b> <a class="float-right"> {{class.lecturerName}}</a>
+                </li>
+                <li class="list-group-item" style="background-color: #F5F5F5;">
+                  <b>Khóa học :</b> <a class="float-right"> {{class.courseName}}</a>
+                </li>
+                <li class="list-group-item" style="background-color: #F5F5F5;">
+                  <b>Sĩ số :</b> <a class="float-right"> {{class.total + " / " + class.maxNumber}}</a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-3" style="margin-left:5%;">
+              <ul class="list-group list-group-unbordered mb-3">
+                <li class="list-group-item" style="background-color: #F5F5F5;">
+                  <b>Ngày bắt đầu :</b> <a class="float-right"> {{class.startDay}}</a>
+                </li>
+                <li class="list-group-item" style="background-color: #F5F5F5;">
+                  <b>Ngày kết thúc :</b> <a class="float-right"> {{class.endDay}}</a>
+                </li>
+                <li class="list-group-item" style="background-color: #F5F5F5;">
+                  <b>Trạng thái :</b>
+                  <a class="float-right">
+                    <span
+                      [class]="(class.status == 1?'badge badge-success':(class.status == 0?'badge badge-danger':'badge badge-primary'))">
+                      {{(class.status)==1?"Hoạt động":((class.status)==0?"Kết thúc":"Đã đầy")}}
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-md-3" style="margin-left:5%;">
+              <ul class="list-group list-group-unbordered mb-3">
+                <li class="list-group-item" style="background-color: #F5F5F5;">
+                  <b>Học phí :</b> <a class="float-right"> {{class.courseFee | currency:'VND':''}} VNĐ</a>
+                </li>
+                <li class="list-group-item" style="background-color: #F5F5F5;">
+                  <b>Học phí theo tháng :</b> <a class="float-right"> {{class.monthlyFee | currency:'VND':''}} VNĐ</a>
+                </li>
+                <li class="list-group-item" style="background-color: #F5F5F5;">
+                  <b>Học phí theo buổi :</b> <a class="float-right"> {{class.lessonFee | currency:'VND':''}} VNĐ</a>
+                </li>
+
+              </ul>
+            </div>
+            <div class="col-md-10">
+              <li style="font-style: italic;">
+                <b>Ghi chú : </b> <a> {{class.note}}</a>
+              </li>
+            </div>
+
+          </div>
+
+
+          <div class="row col-md-12" style="margin-top: 50px; border-bottom: solid 1px silver;">
+            <div class="col-md-2" style="float: left;  padding-top: 8px;">
+              <mat-card-header class="card-container">
+                <mat-card-title style="font-size: 24px; "><b>Danh sách lớp</b></mat-card-title>
+              </mat-card-header>
+            </div>
+
+          </div>
+
+
+          <div style="padding-top: 15px;">
+            <mat-card-content>
+              <div class="row">
+                <div class="col-md-8"></div>
+                <div class="col-md-2" style="float: left;">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Chọn trạng thái</mat-label>
+                    <mat-select [(ngModel)]="tempstatus" (ngModelChange)="loadTable()">
+                      <mat-option *ngFor="let s of status" value="{{s.code}}">
+                        {{s.Name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2" style="float: left;">
+                  <button class="addAndSearch" mat-raised-button color="primary" tabindex="-1"
+                    style="float:right; margin-right: 20px" (click)="XepLop()">
+
+                    Thêm học viên
+                  </button>
+                </div>
+              </div>
+              <table mat-table [dataSource]="dataSourceInClass" class="table-style-three"
+                style="border: 1px solid silver; border-radius: 10px;">
+
+                <ng-container matColumnDef="index">
+                  <th mat-header-cell *matHeaderCellDef class="tencot"> <b>STT</b></th>
+                  <td mat-cell *matCellDef="let element; let i=index"> {{i+1}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cardId">
+                  <th mat-header-cell *matHeaderCellDef class="tencot"><b> Mã HV</b></th>
+                  <td mat-cell *matCellDef="let element"> {{element.learner.cardId}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef class="tencot"> <b>Họ tên</b> </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{element.learner.firstName + " " + element.learner.lastName}}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="sex">
+                  <th mat-header-cell *matHeaderCellDef class="tencot"> <b>Giới tính</b></th>
+                  <td mat-cell *matCellDef="let element"> {{(element.learner.sex == true)?"Nam":"Nữ"}}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="birthday">
+                  <th mat-header-cell *matHeaderCellDef class="tencot"> <b>Năm sinh</b></th>
+                  <td mat-cell *matCellDef="let element"> {{element.learner.birthday | date:'yyyy'}}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef class="tencot"><b> Trạng thái</b></th>
+                  <td mat-cell *matCellDef="let element">
+                    <span
+                      [class]="(element.status == 1?'badge badge-success':(element.status == 0?'badge badge-danger':((element.status == 2)?'badge badge-warning':'badge badge-info')))">
+                      {{(element.status)==1?"Hoạt động":((element.status)==0?"Nghỉ":((element.status == 2)?"Chuyển
+                      lớp":"Hoàn thành"))}}
+                    </span>
+                  </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="controls">
+                  <th mat-header-cell *matHeaderCellDef class="tencot"> <b>Xóa / Chuyển
+                      lớp</b></th>
+                  <td mat-cell *matCellDef="let element">
+                    <div class="row">
+                      <div class="col-md-6" style="text-align: right;">
+                        <button mat-icon-button (click)="deleteStudyProcess(element.learner.id)">
+                          <mat-icon style="color: black;">delete</mat-icon>
+                        </button>
+                      </div>
+                      <div class="col-md-6" style="text-align: left;">
+                        <button mat-icon-button *ngIf="(element.status) == 1" (click)="openChangeClass(element)">
+                          <mat-icon style="color: blue;">swap_vert</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+
+                  </td>
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsInClass"></tr>
+                <tr mat-row (click)="openEditStudyProcess(row)" *matRowDef="let row; columns: displayedColumnsInClass;">
+                </tr>
+              </table>
+              <mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+              </mat-paginator>
+            </mat-card-content>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,17 @@
+mat-form-field {
+    width: 100%;
+}
+
+mat-dialog-title {
+    text-align: center;
+}
+
+.numberStyle {
+    text-align: right;
+}
+
+.mat-row:hover {
+    background: lightslategray;
+    opacity: 0.7;
+  }
+  

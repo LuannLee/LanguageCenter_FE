@@ -1,0 +1,129 @@
+<mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
+
+<section class="content">
+  <div class="container-fluid">
+    <mat-card>
+      <!-- Header -->
+      <mat-card-header class="card-container">
+        <mat-card-title>Giáo Viên</mat-card-title>
+        <mat-card-subtitle>Danh sách giáo viên</mat-card-subtitle>
+      </mat-card-header>
+      <!-- Content -->
+      <div class="row">
+        <!-- Text tìm kiếm tổng hợp -->
+        <div class="col-md-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Thông tin tìm kiếm</mat-label>
+            <input matInput [(ngModel)]="keyWord">
+            <mat-hint>nhập thông tin tìm kiếm: mã, tên, sđt, email, ...</mat-hint>
+          </mat-form-field>
+        </div>
+        <!-- Chọn trạng thái -->
+        <div class="col-md-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Chọn trạng thái</mat-label>
+            <mat-select [(ngModel)]="statusSelected">
+              <mat-option *ngFor="let s of status" value="{{s.code}}">
+                {{s.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!-- Chọn chức vụ -->
+        <div class="col-md-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Chọn chức vụ</mat-label>
+            <mat-select [(ngModel)]="positionKeyword">
+              <mat-option *ngFor="let s of position" value="{{s.name}}">
+                {{s.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!-- Tìm kiếm -->
+        <div class="col-md-1">
+          <button class="addAndSearch" mat-raised-button color="primary" tabindex="-1"
+            style="float: right; margin-right: 20px" (click)="searchLecture()">
+            <mat-icon>search</mat-icon>
+            Tìm kiếm
+          </button>
+        </div>
+        <div class="col-md-3">
+          <button class="addAndSearch" mat-raised-button color="primary" tabindex="-1"
+            style="float: right; margin-right: 20px" (click)="creatLecture()" *ngIf="permissionOfFunction.canCreate">
+            
+            Tạo hồ sơ
+          </button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <!-- Default box -->
+  <div class="container-fluid">
+    <mat-card>
+      <div class="row d-flex align-items-stretch">
+        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch" *ngFor="let item of pageOfItems">
+          <div class="card bg-light">
+            <div class="card-header text-muted border-bottom-0">
+              Giáo viên
+            </div>
+            <div class="card-body pt-0">
+              <div class="row">
+                <div class="col-7">
+                  <h2 class="lead"><b>{{item.firstName + " " + item.lastName}}</b></h2>
+                  <p class="text-muted text-sm"><b>Mã thẻ: </b> {{item.cardId}} </p>
+                  <p class="text-muted text-sm"><b>Vị trí: </b> {{item.position}} </p>
+                  <p class="text-muted text-sm"><b>Giới tính: </b> {{(item.sex)==true?"Nam":"Nữ"}} </p>
+                  <p class="text-muted text-sm"><b>Trạng thái: </b><span
+                      [class]="(item.status == 1?'badge badge-success':'badge badge-danger')">
+                      {{(item.status)==1?"Hoạt động":"Nghỉ việc"}}
+                    </span></p>
+                </div>
+                <div class="col-5 text-center">
+                  <img src="{{item.image}}" alt="" class="img-circle img-fluid">
+                </div>
+                <!-- nội dung dưới ảnh -->
+                <div class="col-12">
+                  <ul class="ml-4 mb-0 fa-ul text-muted">
+                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Địa chỉ:
+                      {{item.address}}</li>
+                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> SĐT #:
+                      {{item.phone}}</li>
+                    <li class="small"><span class="fa-li"><i class="fas fa-envelope"></i></span> Email: {{item.email}}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- Khung Control -->
+            <div class="card-footer" style="background-color:lightgrey;">
+              <div class="text-right">
+                <a (click)="controlLecture(item.id)" class="btn btn-sm bg-teal">
+                  <i class="fas fa-edit"></i> Xem chi tiết
+                </a>
+                <a (click)="deleteLecture(item.id)" class="btn btn-sm bg-danger" *ngIf="permissionOfFunction.canDelete">
+                  <i class="fas fa-trash-alt"></i> Xóa
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer">
+        <nav aria-label="Contacts Page Navigation">
+          <ul class="pagination justify-content-center m-0">
+            <jw-pagination [items]="items" (changePage)="onChangePage($event)" [pageSize]="6"></jw-pagination>
+          </ul>
+        </nav>
+
+      </div>
+      <!-- /.card-footer -->
+    </mat-card>
+  </div>
+  <!-- /.card -->
+
+</section>
+<!-- /.content -->

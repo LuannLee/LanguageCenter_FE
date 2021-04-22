@@ -1,0 +1,31 @@
+@media print {
+  table {
+      border: solid #000 !important;
+      border-width: 1px 0 0 1px !important;
+  }
+  th, td {
+      border: solid #000 !important;
+      border-width: 0 1px 1px 0 !important;
+  }
+}
+
+  #tableTimesheet th, #tableTimesheet td {
+    border: solid 1px black;
+  }
+
+  #tableTimesheet{
+    border: solid 1px black;
+  }
+
+  #tableTimesheet th, #tableTimesheet td {
+    border: solid 1px black;
+  }
+
+  td {
+    font-size: 11pt;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .mat-form-field{
+    width: 100%;
+  }

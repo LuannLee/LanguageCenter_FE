@@ -1,0 +1,135 @@
+<section class="content" style="margin-top: 1%">
+  <div class="container-fluid">
+    <div style="background-color: white;">
+      <mat-card-header class="card-container">
+        <mat-card-title style="font-size: 24px;"><b> Điểm định kỳ</b></mat-card-title>
+      </mat-card-header>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div style="background-color: white;">
+          <div class="row col-md-12" style="border-bottom: solid 1px silver; margin-bottom: 10px;">
+            <div class="row col-md-10" style=" padding-top: 8px;">
+              <div class="col-md-3" style="float: left;">
+
+              </div>
+            </div>
+            <!-- Chọn lớp học  -->
+            <div class="col-md-2">
+              <mat-form-field appearance="outline">
+                <mat-label>Chọn lớp học</mat-label>
+                <mat-select [(ngModel)]="classMessageId" (ngModelChange)="loadClassList()">
+                  <mat-option *ngFor="let s of classList" value="{{s.id}}">
+                    {{s.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class=" row col-md-12" style="background-color: white;">
+            <b>Lớp :</b> <a class="float-right"> {{class.name}}</a> - <b>Khóa học :</b> <a class="float-right"> -
+              <b>Trạng thái :</b>
+              <a class="float-right">
+                <span
+                  [class]="(class.status == 1?'badge badge-success':(class.status == 0?'badge badge-danger':'badge badge-primary'))">
+                  {{(class.status)==1?"Hoạt động":((class.status)==0?"Kết thúc":"Đã đầy")}}
+                </span>
+              </a>
+              {{class.courseName}}</a>
+
+            <div class="col-md-6" style="margin-left:5%;">
+            </div>
+
+          </div>
+
+          <div style="padding-top: 15px;">
+            <mat-card-content>
+              <div class="col-md-2" style="float: left;">
+                <mat-form-field appearance="outline">
+                  <mat-label>Tuần</mat-label>
+                  <mat-select [(ngModel)]="weekSelected" (ngModelChange)="reloadTable()">
+                    <mat-option *ngFor="let s of periodicPoint" value="{{s.id}}">
+                      Tuần {{s.week}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-10" style="float: right;">
+                <button class="addAndSearch" mat-flat-button color="accent" tabindex="-1"
+                  style="float:right; margin-right: 20px" (click)="CreatPeriodicPoint()"
+                  *ngIf="permissionOfFunction.canCreate">
+
+                  Tạo bảng điểm
+                </button>
+              </div>
+              <table mat-table [dataSource]="dataSource">
+
+                <ng-container matColumnDef="index">
+                  <th mat-header-cell *matHeaderCellDef class="tencot"> <b>STT</b></th>
+                  <td mat-cell *matCellDef="let element; let i=index"> {{i+1}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="learnerCardId">
+                  <th mat-header-cell *matHeaderCellDef class="tencot"><b> Mã HV</b></th>
+                  <td mat-cell *matCellDef="let element"> {{element.learnerCardId}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="learnerName">
+                  <th mat-header-cell *matHeaderCellDef class="tencot"> <b>Họ tên</b> </th>
+                  <td mat-cell *matCellDef="let element">{{element.learnerName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="learnerSex">
+                  <th mat-header-cell *matHeaderCellDef class="tencot"> <b>Giới tính</b></th>
+                  <td mat-cell *matCellDef="let element"> {{(element.learnerSex == true)?"Nam":"Nữ"}}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="learnerBriday">
+                  <th mat-header-cell *matHeaderCellDef class="tencot"> <b>Năm sinh</b></th>
+                  <td mat-cell *matCellDef="let element"> {{element.learnerBriday | date:'yyyy'}}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="point">
+                  <th mat-header-cell *matHeaderCellDef class="tencot"><b> Điểm</b></th>
+                  <td mat-cell *matCellDef="let element">
+                    <input style="width: 50px; background-color:#F5F5F5;" (keypress)="numberOnly($event)"
+                      [(ngModel)]="element.point" matInput required autocomplete="off"
+                      (change)="updatePeriodicPoint(element)" [readonly]="weekName == maxWeek ? false : true">
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="averagePoint">
+                  <th mat-header-cell *matHeaderCellDef class="tencot"><b> Điểm TB</b></th>
+                  <td mat-cell *matCellDef="let element"> {{element.averagePoint}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="sortedByPoint">
+                  <th mat-header-cell *matHeaderCellDef class="tencot"><b>Thứ tự</b></th>
+                  <td mat-cell *matCellDef="let element"> {{element.sortedByPoint}}</td>
+                </ng-container>
+                <ng-container matColumnDef="sortedByAveragePoint">
+                  <th mat-header-cell *matHeaderCellDef class="tencot"><b>TT tổng</b></th>
+                  <td mat-cell *matCellDef="let element"> {{element.sortedByAveragePoint}}</td>
+                </ng-container>
+                <ng-container matColumnDef="note">
+                  <th mat-header-cell *matHeaderCellDef class="tencot"><b>Ghi chú</b></th>
+                  <td mat-cell *matCellDef="let element"> {{element.note}}</td>
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                </tr>
+              </table>
+              <mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+              </mat-paginator>
+            </mat-card-content>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

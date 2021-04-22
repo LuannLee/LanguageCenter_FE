@@ -1,0 +1,79 @@
+<h1 mat-dialog-title>
+  <b>Cập nhật tài khoản</b>
+  <button mat-icon-button style="float: right;">
+    <mat-icon>delete</mat-icon>
+  </button>
+</h1>
+
+
+<form novalidate [formGroup]="accountFormGroup" (ngSubmit)="updateAccount()">
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field appearance="outline">
+          <mat-label>Tên tài khoản</mat-label>
+          <input [(ngModel)]="user.userName" matInput placeholder="Nhập tên tài khoản" formControlName="userName">
+          <mat-error *ngIf="!accountFormGroup.hasError('required')">
+            Vui lòng nhập tên tài khoản!
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <input formControlName="password" type="password" matInput placeholder="Mật khẩu" [(ngModel)]="user.password">
+          <mat-error *ngIf="!accountFormGroup.hasError('required')">
+            Vui lòng nhập mật khẩu!
+          </mat-error>
+          <mat-error *ngIf="!accountFormGroup.hasError('minLength') || !accountFormGroup.hasError('pattern')">
+            Vui lòng nhập ít nhất 8 kí tự, ít nhất 1 chữ hoa và 1 kí tự đặc biệt
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <input formControlName="fullName" matInput placeholder="Họ và tên" [(ngModel)]="user.fullName">
+          <mat-error *ngIf="!accountFormGroup.hasError('required')">
+            Vui lòng nhập đầy đủ họ tên!
+          </mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline">
+          <input formControlName="email" matInput placeholder="Email" [(ngModel)]="user.email">
+          <mat-error *ngIf="!accountFormGroup.hasError('required') || !accountForm.hasError('email') ">
+            Vui lòng nhập email, có dạng "example@gmail.com"!
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <input formControlName="phoneNumber" matInput placeholder="Số điện thoại" [(ngModel)]="user.phoneNumber">
+          <mat-error
+            *ngIf="!accountFormGroup.hasError('required') || !accountFormGroup.hasError('minLength') || !accountFormGroup.hasError('pattern')">
+            Vui lòng nhập số điện thoại, độ dài từ 10!
+          </mat-error>
+
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Trạng thái</mat-label>
+          <mat-select [(ngModel)]="user.status" required style="text-align: center;" formControlName="status">
+            <mat-option *ngFor="let item of status" [value]="item.value" style="text-align: center;">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="!accountFormGroup.hasError('required')">
+            Vui lòng chọn trạng thái!
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <mat-dialog-actions align="end">
+    <button type="submit" mat-raised-button color="primary" tabindex="-1">
+      <mat-icon>add_circle</mat-icon>
+      Cập nhật
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">
+      <mat-icon>cancel</mat-icon>
+      Hủy
+    </button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,143 @@
+<div class="container-fluid">
+        <mat-card>
+            <mat-card-header class="card-container">
+                <mat-card-title style="font-size: 24px;"><b>Báo cáo danh lương nhân viên</b></mat-card-title>
+            </mat-card-header>
+            <div class="row">
+                <div class="col-md-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Chọn tháng</mat-label>
+                        <mat-select [(ngModel)]="monthSelectedId">
+                            <mat-option *ngFor="let item of months" value="{{item}}">
+                                {{item}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Chọn năm</mat-label>
+                        <mat-select [(ngModel)]="yearSelectedId">
+                            <mat-option *ngFor="let item of years" value="{{item}}">
+                                {{item}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+    
+                <div class="col-md-6">
+                    <button ngxPrint styleSheetFile="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                        printSectionId="testprint" mat-raised-button color="primary" tabindex="-1"
+                        style="float: right; margin-right: 20px">
+                        <mat-icon>print</mat-icon>
+                        In báo cáo
+                    </button>
+    
+                    <button (click)="hienthi()" mat-raised-button color="primary" tabindex="-1"
+                        style="float: right; margin-right: 20px">
+                        <mat-icon>pageview
+                        </mat-icon>
+                        Hiển thị
+                    </button>
+    
+                </div>
+            </div>
+        </mat-card>
+    </div>
+    <div class="container-fluid" *ngIf="checkview">
+        <mat-card style="margin-top: 5px; margin-bottom: 10px;" id="testprint">
+            <div style='width: 100%; float: left;'>
+                <div style='width: 50%;float: left;'>
+                    <div style='width: 100%;float: left; text-align: center '>
+                        Trung Tâm Ngoại Ngữ I-English
+                    </div>
+                    <div style='width: 100%;float: left;  text-align: center'>
+                        ĐC: Cerella Villa, No 33, Plot 11B, Lê Hồng Phong, Đằng Hải, Hải An, Hải Phòng
+                    </div>
+                </div>
+                <div style='width: 50%;float: right; text-align: center;'>
+                </div>
+            </div>
+            <br><br><br>
+            <div style=' width: 100%; text-align: center; margin-bottom: 30px; margin-top: 30px;'>
+                <h2>BẢNG LƯƠNG NHÂN VIÊN</h2>
+                <p style="font-size: 16px;">(Bảng lương tháng {{this.monthSelectedId}} năm {{this.yearSelectedId}})</p>
+            </div>
+    
+            <div class="row">
+                <div class="col-12">
+                    <div class="row" style="margin-bottom: 15px; font-style: italic;">
+                        <div style="margin-left: 10px;">
+                            <span> <b> Số giáo viên:</b> {{public.soNV}}</span>
+                        </div>
+                        <div style="margin-left: 30px;">
+                            <span><b> Tổng tiền:</b> {{public.tongTien | currency:'JPY':''}}</span>
+                        </div>
+                        <div style="margin-left: 30px;">
+                                <span><b> Đơn vị: VNĐ</b></span>
+                        </div>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope='col' style="text-align: center;vertical-align:top; width: 5%;">STT</th>
+                                <th scope='col' style="width: 14%; vertical-align:top;">Họ và tên</th>
+                                <th scope='col' style="text-align: center; vertical-align:top; width: 8%;">Chức vụ</th>
+                                <th scope='col' style="text-align: center; vertical-align:top; width: 5%;">Ngày công</th>
+                                <th scope='col' style="text-align: center; vertical-align:top; width: 8%;">Lương</th>
+                                <th scope='col' style="text-align: center; vertical-align:top; width: 8%;">Phụ cấp</th>
+                                <th scope='col' style="text-align: center; vertical-align:top; width: 8%;">Thưởng</th>
+                                <th scope='col' style="text-align: center; vertical-align:top; width: 8%;">Bảo hiểm</th>
+                                <th scope='col' style="text-align: center; vertical-align:top; width: 8%;">Tổng lương</th>
+                                <th scope='col' style="text-align: center; vertical-align:top; width: 8%;">Tạm ứng</th>
+                                <th scope='col' style="text-align: center; vertical-align:top; width: 8%;">Thực nhận</th>
+                                <th scope='col' style="vertical-align:top; text-align: center;">Ký nhận</th>
+                            </tr>
+                        </thead>
+                        <tbody style="font-size: 15px;" *ngFor="let item of payRoll; let i = index">
+                            <tr>
+                                <th style="text-align: center;">{{i+1}}</th>
+                                <td>{{item.perSonnel.firstName + " " + item.perSonnel.lastName}}</td>
+                                <td style="text-align: center;">{{item.perSonnel.position}}</td>
+                                <td style="text-align: center;">{{item.salary.totalWorkdays}}</td>
+                                <td style="text-align: center;">
+                                    {{item.salary.totalTheoreticalAmount - item.salary.totalBonus - item.salary.totalAllowance | currency:'JPY':''}}
+                                </td>
+                                <td style="text-align: center;">{{item.salary.totalAllowance | currency:'JPY':''}}</td>
+                                <td style="text-align: center;">{{item.salary.totalBonus | currency:'JPY':''}}</td>
+                                <td style="text-align: center;">{{item.salary.totalInsurancePremium | currency:'JPY':''}}
+                                </td>
+                                <td style="text-align: center;">{{item.salary.totalTheoreticalAmount | currency:'JPY':''}}
+                                </td>
+                                <td style="text-align: center;">{{item.salary.totalAdvancePayment | currency:'JPY':''}}</td>
+                                <td style="text-align: center;">{{item.salary.totalRealityAmount  | currency:'JPY':''}}</td>
+                                <td style="text-align: center;"></td>
+                            </tr>
+                        </tbody>
+                        <tfoot style="font-size: 15px; font-weight: bold;">
+                            <tr>
+                                <th style="text-align: center;">#</th>
+                                <td style="font-size: 16px; font-weight: bold;">Tổng tiền :</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: center;">{{public.tongTien | currency:'JPY':''}}</td>
+                                <td></td>
+    
+                            </tr>
+                        </tfoot>
+                    </table>
+    
+                </div>
+                <div style='width: 100%; float: right;margin-top: 50px;'>
+                    <div style='width: 30%;float: right; text-align: center;'><b>Người lập</b><br><i>(Ký và ghi rõ họ
+                            tên)</i></div>
+                </div>
+            </div>
+        </mat-card>
+    </div>

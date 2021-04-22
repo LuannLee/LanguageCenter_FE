@@ -1,0 +1,105 @@
+<div class="container-fluid">
+    <mat-card>
+        <mat-card-header class="card-container">
+            <mat-card-title style="font-size: 24px;"><b>Báo cáo danh sách phiếu chi</b></mat-card-title>
+        </mat-card-header>
+        <div class="row">
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Chọn tháng</mat-label>
+                    <mat-select [(ngModel)]="monthSelectedId">
+                        <mat-option *ngFor="let item of months" value="{{item}}">
+                            {{item}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Chọn năm</mat-label>
+                    <mat-select [(ngModel)]="yearSelectedId">
+                        <mat-option *ngFor="let item of years" value="{{item}}">
+                            {{item}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+
+            <div class="col-md-6">
+                <button ngxPrint styleSheetFile="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                    printSectionId="testprint" [useExistingCss]="true" mat-raised-button color="primary" tabindex="-1"
+                    style="float: right; margin-right: 20px">
+                    <mat-icon>print</mat-icon>
+                    In báo cáo
+                </button>
+
+                <button (click)="hienthi()" mat-raised-button color="primary" tabindex="-1"
+                    style="float: right; margin-right: 20px">
+                    <mat-icon>pageview
+                    </mat-icon>
+                    Hiển thị
+                </button>
+
+            </div>
+        </div>
+    </mat-card>
+</div>
+<div class="container-fluid" *ngIf="checkview">
+    <mat-card style="margin-top: 5px; margin-bottom: 10px;" id="testprint">
+        <div style='width: 100%; float: left;'>
+            <div style='width: 50%;float: left;'>
+                <div style='width: 100%;float: left; text-align: center '>
+                    Trung Tâm Ngoại Ngữ I-English
+                </div>
+                <div style='width: 100%;float: left;  text-align: center'>
+                    ĐC: Cerella Villa, No 33, Plot 11B, Lê Hồng Phong, Đằng Hải, Hải An, Hải Phòng
+                </div>
+            </div>
+            <div style='width: 50%;float: right; text-align: center;'>
+            </div>
+        </div>
+        <br><br><br>
+        <div style=' width: 100%; text-align: center; margin-bottom: 30px; margin-top: 30px;'>
+            <h2>DANH SÁCH PHIẾU CHI </h2>
+            <p style="font-size: 16px;">(Danh sách chi tháng {{this.monthSelectedId}} năm {{this.yearSelectedId}})</p>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="row" style="margin-bottom: 15px; font-style: italic;">
+                        <div class="col-md-12" style="text-align: right;">
+                                <span><b> Đơn vị: VNĐ</b></span>
+                        </div>
+                </div>
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope='col' style="text-align: center; width: 10%;">STT</th>
+                            <th scope='col' style="text-align: center; width: 15%;">Mã phiếu</th>
+                            <th scope='col' style="text-align: center; width: 20%;">Ngày chi</th>
+                            <th scope='col' style="text-align: center; width: 20%;">Loại phiếu</th>
+                            <th scope='col' style="text-align: center; width: 20%;">Người nhận</th>
+                            <th scope='col' style="text-align: center; width: 15%;">Tổng tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size: 15px;" *ngFor="let item of listPayslip; let i = index">
+                        <tr>
+                            <th style="text-align: center;">{{i+1}}</th>
+                            <td style="text-align: center;">{{item.id}}</td>
+                            <td style="text-align: center;">{{item.date | date:'dd-MM-yyyy'}}</td>
+                            <td style="text-align: center;">{{item.paySlipTypeName}}</td>
+                            <td style="text-align: center;">{{item.receiver}}</td>
+                            <td style="text-align: center;">{{item.total | currency:'JPY':''}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div style='width: 100%; float: right;margin-top: 50px;'>
+                <div style='width: 30%;float: right; text-align: center;'><b>Người lập</b><br><i>(Ký và ghi rõ họ
+                        tên)</i></div>
+            </div>
+        </div>
+    </mat-card>
+</div>

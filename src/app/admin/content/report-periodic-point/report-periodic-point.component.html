@@ -1,0 +1,104 @@
+<div class="container-fluid">
+    <mat-card>
+        <mat-card-header class="card-container">
+            <mat-card-title style="font-size: 24px;"><b>Báo cáo điểm định kỳ</b></mat-card-title>
+            <mat-card-subtitle style="font-size: 18px;">Báo cáo điểm định kỳ</mat-card-subtitle>
+        </mat-card-header>
+        <div class="row">
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Chọn lớp học</mat-label>
+                    <mat-select [(ngModel)]="classMessageId" (ngModelChange)="loadClassList()">
+                        <mat-option *ngFor="let item of classList" value="{{item.id}}">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Chọn tuần</mat-label>
+                    <mat-select [(ngModel)]="weekSelected" (ngModelChange)="reloadTable()">
+                        <mat-option *ngFor="let s of periodicPoint" value="{{s.id}}">
+                            Tuần {{s.week}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <button ngxPrint styleSheetFile="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                    printSectionId="testprint" [useExistingCss]="true" mat-raised-button color="primary" tabindex="-1"
+                    style="float: right; margin-right: 20px">
+                    <mat-icon>print</mat-icon>
+                    In báo cáo
+                </button>
+
+                <button (click)="ViewReport()" mat-raised-button color="primary" tabindex="-1"
+                    style="float: right; margin-right: 20px">
+                    <mat-icon>pageview
+                    </mat-icon>
+                    Hiển thị
+                </button>
+            </div>
+        </div>
+    </mat-card>
+</div>
+<div class="container-fluid" *ngIf="checkview">
+    <mat-card style="margin-top: 5px; margin-bottom: 10px;" id="testprint">
+        <div style='width: 100%; float: left;'>
+            <div style='width: 50%;float: left;'>
+                <div style='width: 100%;float: left; text-align: center '>
+                    Trung Tâm Ngoại Ngữ I-English
+                </div>
+                <div style='width: 100%;float: left;  text-align: center'>
+                    ĐC: Cerella Villa, No 33, Plot 11B, Lê Hồng Phong, Đằng Hải, Hải An, Hải Phòng
+                </div>
+            </div>
+            <div style='width: 50%;float: right; text-align: center;'>
+            </div>
+        </div>
+        <br><br><br>
+        <div style=' width: 100%; text-align: center;'>
+            <h2>BẢNG ĐIỂM LỚP {{class.name | uppercase}} - TUẦN {{weekName}}</h2>
+            <p style="font-size: 15px;">(Ngày vào: {{dateOnPoint | date: 'dd/MM/yyyy'}} - Loại Điểm: Điểm tuần)</p>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope='col' style="text-align: center;">STT</th>
+                            <th scope='col'>Họ và tên</th>
+                            <th scope='col' style="text-align: center;">Năm sinh</th>
+                            <th scope='col' style="text-align: center;">GT</th>
+                            <th scope='col' style="text-align: center;">Điểm</th>
+                            <th scope='col' style="text-align: center;">Điểm TB</th>
+                            <th scope='col' style="text-align: center;">Xếp TT</th>
+                            <th scope='col' style="text-align: center;">Xếp TT Tổng</th>
+                            <th scope='col' style="text-align: center;">Ghi chú</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size: 15px;" *ngFor="let item of periodicPointDetail; let i = index">
+                        <tr>
+                            <th scope='row' style="text-align: center;">{{i+1}}</th>
+                            <td>{{item.learnerName}}</td>
+                            <td style="text-align: center;">{{item.learnerBriday | date:'yyyy'}}</td>
+                            <td style="text-align: center;">{{(item.learnerSex == true)?"Nam":"Nữ"}} </td>
+                            <td style="text-align: center;">{{item.point}}</td>
+                            <td style="text-align: center;">{{item.averagePoint}}</td>
+                            <td style="text-align: center;">{{item.sortedByPoint}}</td>
+                            <td style="text-align: center;">{{item.sortedByAveragePoint}}</td>
+                            <td style="text-align: center;">{{item.note}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div style='width: 100%; float: right;'>
+                <div style='width: 30%;float: right; text-align: center;'><b>Người Lập</b><br><i>(Ký và ghi rõ họ
+                        tên)</i></div>
+            </div>
+        </div>
+    </mat-card>
+</div>

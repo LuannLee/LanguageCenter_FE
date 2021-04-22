@@ -1,0 +1,337 @@
+<section class="content" style="margin-top: 1%">
+    <div class="container-fluid">
+        <mat-card>
+            <mat-card-header class="card-container">
+                <mat-card-title style="font-size: 24px;"><b>Phiếu thu</b></mat-card-title>
+                <mat-card-subtitle style="font-size: 18px;">Phiếu thu / Tạo phiếu thu</mat-card-subtitle>
+            </mat-card-header>
+        </mat-card>
+    </div>
+    <!--Thông tin phiếu thu -->
+    <div class="container-fluid" style="margin-top: 10px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">Thông tin phiếu thu</h3>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Chọn loại phiếu thu</mat-label>
+                                            <mat-select [(ngModel)]="receipt.receiptTypeId" required
+                                                style="text-align: center;">
+                                                <mat-option *ngFor="let type of receiptType" value="{{type.id}}">
+                                                    {{type.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Người nộp</mat-label>
+                                            <input [(ngModel)]="receipt.nameOfPaymentApplicant" matInput
+                                                placeholder="Nhập tên người nộp" autocomplete="off" required />
+                                        </mat-form-field>
+
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Mã học viên</mat-label>
+                                            <input [(ngModel)]="cardId" matInput placeholder="Nhập tên học viên"
+                                                autocomplete="off" required (change)="ChangeInfoLearner()" />
+                                        </mat-form-field>
+
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Tổng tiền</mat-label>
+                                            <input [(ngModel)]="receipt.totalAmount" matInput placeholder="Tổng tiền"
+                                                readonly="true" required />
+                                        </mat-form-field>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Tên học viên</mat-label>
+                                            <mat-select [(ngModel)]="receipt.learnerId" style="text-align: center;"
+                                                required (selectionChange)="ChangeSelectLearner()">
+                                                <mat-option *ngFor="let learner of learners" value="{{learner.id}}">
+                                                    {{learner.firstName+' '+learner.lastName}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Nhân viên thu</mat-label>
+                                            <mat-select [(ngModel)]="receipt.personnelId" style="text-align: center;"
+                                                required>
+                                                <mat-option *ngFor="let personel of personels" value="{{personel.id}}">
+                                                    {{personel.firstName+' '+personel.lastName}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Địa chỉ</mat-label>
+                                            <input [(ngModel)]="address" matInput placeholder="Nhập địa chỉ"
+                                                autocomplete="off" readonly="true" />
+                                        </mat-form-field>
+
+                                        <mat-form-field appearance="outline">
+                                            <input [(ngModel)]="receipt.collectionDate" matInput
+                                                [matDatepicker]="picker" placeholder="Ngày thu" required
+                                                autocomplete="off">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker touchUi #picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Nội dung nộp</mat-label>
+                                            <textarea [(ngModel)]="receipt.note" matInput placeholder="Nhập nội dung"
+                                                cdkTextareaAutosize cdkAutosizeMinRows="1"
+                                                cdkAutosizeMaxRows="1"></textarea>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Trạng thái</mat-label>
+                                            <mat-select [(ngModel)]="receipt.status" required
+                                                style="text-align: center;">
+                                                <mat-option *ngFor="let item of status" value="{{item.code}}">
+                                                    {{item.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.Thông tin phiếu thu -->
+
+    <!--Chi tiết phiếu thu -->
+    <div class="container-fluid" style="margin-top: 10px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">Thông tin chi tiết phiếu thu</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Lớp</mat-label>
+                                            <mat-select (selectionChange)="ChangeSelectClassOfDetail()"
+                                                [(ngModel)]="languageClassId" required style="text-align: center;">
+                                                <mat-option *ngFor="let class of classInReceiptDetail"
+                                                    value="{{class.languageClassId}}">
+                                                    {{class.languageClassName}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Học phí</mat-label>
+                                            <input [(ngModel)]="tuition" matInput placeholder="Tổng tiền"
+                                                readonly="true" autocomplete="off" required />
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Tháng</mat-label>
+                                            <mat-select [(ngModel)]="month" required style="text-align: center;">
+                                                <mat-option *ngFor="let month of months" value="{{month}}">
+                                                    {{month}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Tiền quỹ</mat-label>
+                                            <input [(ngModel)]="fundMoney" matInput placeholder="Tổng tiền"
+                                                autocomplete="off" (keypress)="numberOnly($event)" required />
+                                        </mat-form-field>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Năm</mat-label>
+                                            <mat-select [(ngModel)]="year" required style="text-align: center;">
+                                                <mat-option *ngFor="let year of years" value="{{year}}">
+                                                    {{year}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Tiền CSVC</mat-label>
+                                            <input [(ngModel)]="infrastructureMoney" matInput placeholder="Tổng tiền"
+                                                required autocomplete="off" (keypress)="numberOnly($event)" />
+                                        </mat-form-field>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Trạng thái</mat-label>
+                                            <mat-select [(ngModel)]="statusDetail" required style="text-align: center;">
+                                                <mat-option *ngFor="let item of status" value="{{item.code}}">
+                                                    {{item.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Tiền thu khác</mat-label>
+                                            <input [(ngModel)]="otherMoney" matInput placeholder="Tổng tiền"
+                                                autocomplete="off" (keypress)="numberOnly($event)" required />
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Ghi chú</mat-label>
+                                            <textarea [(ngModel)]="note" matInput placeholder="Nhập ghi chú"
+                                                cdkTextareaAutosize cdkAutosizeMinRows="2"
+                                                cdkAutosizeMaxRows="2"></textarea>
+                                        </mat-form-field>
+
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <button (click)="insertRowInTable()" mat-raised-button color="primary"
+                                                tabindex="-1">
+                                                
+                                                Thêm chi tiết
+                                            </button>
+                                            <button style="margin-left: 10px;" (click)="deleteAllRow()"
+                                                mat-raised-button color="warn" tabindex="-1">
+                                                <mat-icon>delete</mat-icon>
+                                                Xóa chi tiết
+                                            </button>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button style="float: right;"  (click)="CreatReceipt()"
+                                                mat-raised-button color="primary" tabindex="-1">
+                                                <mat-icon>receipt</mat-icon>
+                                                Cập nhật phiếu thu
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.Thông tin chi tiết phiếu thu -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-card>
+                    <mat-card-header class="card-container">
+                        <mat-card-title style="font-size: 22px;"><b>Chi tiết phiếu thu</b></mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="example-container mat-elevation-z8">
+                            <table mat-table [dataSource]="dataSource">
+                                <!-- Item Column -->
+                                <ng-container matColumnDef="index">
+                                    <th mat-header-cell *matHeaderCellDef> STT </th>
+                                    <td mat-cell *matCellDef="let element;let i=index">{{i+1}}</td>
+                                </ng-container>
+
+                                <!-- Cost Column -->
+                                <ng-container matColumnDef="languageClassId">
+                                    <th mat-header-cell *matHeaderCellDef> Lớp </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.languageClassName}}</td>
+
+                                </ng-container>
+
+                                <ng-container matColumnDef="month">
+                                    <th mat-header-cell *matHeaderCellDef> Tháng </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.month}} </td>
+
+                                </ng-container>
+
+                                <ng-container matColumnDef="year">
+                                    <th mat-header-cell *matHeaderCellDef> Năm </th>
+                                    <td mat-cell *matCellDef="let element">{{element.year}} </td>
+
+                                </ng-container>
+
+                                <ng-container matColumnDef="tuition">
+                                    <th mat-header-cell *matHeaderCellDef> Học phí </th>
+                                    <td mat-cell *matCellDef="let element">{{element.tuition}} </td>
+
+                                </ng-container>
+                                <ng-container matColumnDef="fundMoney">
+                                    <th mat-header-cell *matHeaderCellDef> Tiền quỹ </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.fundMoney}}</td>
+
+                                </ng-container>
+                                <ng-container matColumnDef="infrastructureMoney">
+                                    <th mat-header-cell *matHeaderCellDef> Tiền CSVC </th>
+                                    <td mat-cell *matCellDef="let element">{{element.infrastructureMoney}} </td>
+
+                                </ng-container>
+
+                                <ng-container matColumnDef="otherMoney">
+                                    <th mat-header-cell *matHeaderCellDef> Thu khác </th>
+                                    <td mat-cell *matCellDef="let element">{{element.otherMoney}} </td>
+
+                                </ng-container>
+
+                                <ng-container matColumnDef="totalMoney">
+                                    <th mat-header-cell *matHeaderCellDef> Tổng tiền </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.totalMoney }}</td>
+
+                                </ng-container>
+
+                                <ng-container matColumnDef="note">
+                                    <th mat-header-cell *matHeaderCellDef> Ghi chú </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.note}}</td>
+
+                                </ng-container>
+
+                                <ng-container matColumnDef="control">
+                                    <th mat-header-cell *matHeaderCellDef> Xóa</th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <button (click)="deleteRow(element)" mat-icon-button>
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </td>
+
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                            </table>
+
+                            <mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,165 @@
+<mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
+
+<section class="content" style="margin-top: 1%">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="row">
+          <div class="col-md-12">
+            <mat-card>
+              <mat-card-header>
+                <b>Danh sách lớp</b>
+              </mat-card-header>
+              <hr>
+              <mat-card-content>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Chọn khóa học</mat-label>
+                  <mat-select [(ngModel)]="courseSelected" (valueChange)="changValueCourse($event)">
+                    <mat-option *ngFor="let item of courses" [value]="item.id">{{ item.name }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Chọn lớp học</mat-label>
+                  <mat-select [(ngModel)]="classSelected" (valueChange)="changValueClass($event)">
+                    <mat-option *ngFor="let item of classes" [value]="item.id">{{ item.name }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <button mat-icon-button (click)="openCreateClassSection()">
+                  <mat-icon>extension</mat-icon>
+                  Tạo lịch
+                </button>
+
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div class="col-md-12" style="margin-top: 2%;">
+            <mat-card>
+              <mat-card-header>
+                <b>Thông tin chi tiết</b>
+              </mat-card-header>
+              <hr>
+              <mat-card-content>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <b> Tên lớp:</b>
+                      </div>
+                      <div class="col-md-12">
+                        <b>Giáo viên:</b>
+                      </div>
+                      <div class="col-md-12">
+                        <b>Trạng thái:</b>
+                      </div>
+                      <div class="col-md-12">
+                        <b>Tiến trình lịch</b>
+                      </div>
+                      <div class="col-md-12">
+                        <b> Sĩ số: </b>
+                      </div>
+                      <div class="col-md-12">
+                        <b> Thời gian học: </b>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <span class="badge badge-secondary">{{ infoClass.name}}</span>
+                      </div>
+                      <div class="col-md-12">
+                        <span class="badge badge-info">{{ infoClass.nameOfLecturer }}</span>
+                      </div>
+                      <div class="col-md-12">
+                        <span class="badge badge-success">{{ infoClass.status }}</span>
+                      </div>
+                      <div class="col-md-12">
+                        <span class="badge badge-warning">{{ infoClass.scheduleStatus }}</span>
+                      </div>
+                      <div class="col-md-12">
+                        <span class="badge badge-secondary">{{ infoClass.numberOfPeople }}</span>
+                      </div>
+                      <div class="col-md-12">
+                        <span class="badge badge-primary">{{ infoClass.time }}</span>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-9">
+        <mat-card>
+
+          <mat-card-header style="width: 100%">
+            <div class="row">
+              <div class="col-md-12">
+                <b>Tháng {{ monthSelected +1 }} - Năm {{ yearSelected }}</b>
+              </div>
+            </div>
+          </mat-card-header>
+
+          <hr>
+          <mat-card-content>
+            <div class="row">
+              <div class="col-md-3">
+                <button mat-icon-button (click)="forwardMonth()">
+                  <mat-icon>arrow_back_ios</mat-icon>
+                </button>
+                <button mat-icon-button (click)="nextMonth()">
+                  <mat-icon>arrow_forward_ios</mat-icon>
+                </button>
+
+              </div>
+              <div class="col-md-5">
+              </div>
+              <div class="col-md-4">
+                <mat-button-toggle-group style="float: right;">
+                  <mat-button-toggle value="bold">Tháng</mat-button-toggle>
+                  <!-- <mat-button-toggle value="italic">Tuần</mat-button-toggle>
+                  <mat-button-toggle value="underline">Ngày</mat-button-toggle> -->
+                </mat-button-toggle-group>
+              </div>
+
+            </div>
+
+            <hr>
+            <mat-grid-list cols="7" rowHeight="4:1">
+              <mat-grid-tile *ngFor="let item of daysOfWeek">
+                <h5><b>{{item}}</b></h5>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <hr>
+            <mat-grid-list cols="7" rowHeight="1:1">
+              <mat-grid-tile *ngFor="let item of dateOfweek" id="monthGridList">
+                <mat-grid-tile-header style="height: 10%;"> {{item.date|  slice:0:2}}</mat-grid-tile-header>
+
+                <div class="drag-container">
+                  <div cdkDropList id="{{ item.date }}" [cdkDropListData]="item.schedule"
+                    [cdkDropListConnectedTo]="connectedTo" class="item-list" (cdkDropListDropped)="drop($event)">
+                    <div class="item-box" *ngFor="let schedule of item.schedule" cdkDrag
+                      (cdkDragStarted)="dragStarted($event)" (cdkDragEnded)="dragEnded($event)">
+                      <span>{{ schedule.content }}</span>
+                    </div>
+                  </div>
+                </div>
+              </mat-grid-tile>
+            </mat-grid-list>
+
+          </mat-card-content>
+
+        </mat-card>
+      </div>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,41 @@
+.mat-column-select {
+    overflow: initial;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  table {
+    text-align: center !important;
+    width: 100%;
+  }
+
+  .mat-header-cell {
+    text-align: center;
+  }
+
+  .mat-header-cell {
+    font-size: 16px;
+    font: bold;
+  }
+  .mat-row:hover {
+    opacity: 0.7;
+  }
+  table.table-style-three tr:hover td {
+    cursor: pointer;
+  }
+  table.table-style-three tr:nth-child(even) td{
+    background-color: lightgoldenrodyellow;
+  }
+  .tencot {
+    color: black;
+  }
+
+
+
+  .img-circle{
+    height:168px;
+    width: 168px;
+    overflow:hidden;
+}

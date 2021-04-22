@@ -1,0 +1,198 @@
+<mat-card style="margin-bottom: 10px;" color="primary" backgroundColor="primary">
+  <h1 mat-dialog-title style="text-align: center;">Thông Tin Chuyển Lớp</h1>
+</mat-card>
+<mat-card>
+  <div mat-dialog-content>
+      <div class="row">
+          <div id="khungvien" style="height: 500px; width: 36%;">
+              <div class="col-md-12"
+                  style="background-color:#ff8080; padding-left: 30%; padding-top: 10px; font-size: 20px;">
+                  <span>Thông tin lớp cũ</span>
+              </div>
+              <div class="col-md-12">
+                  <div class="row">
+                      <div class="col-md-5" id="row_row">
+                          <span><b>Học viên</b></span>
+                      </div>
+                      <div class="col-md-7" id="row_row">
+                          <span [class]="'badge badge-primary'">
+                              {{data._learnerInClass.learner.firstName + " " + data._learnerInClass.learner.lastName}}
+                          </span>
+                      </div>
+                  </div>
+
+                  <div class="row" style="background-color:whitesmoke">
+                      <div class="col-md-5" id="row_row">
+                          <span><b>Mã HV</b></span>
+                      </div>
+                      <div class="col-md-7" id="row_row">
+                          <span [class]="'badge badge-primary'"> {{data._learnerInClass.learner.cardId}} </span>
+                      </div>
+                  </div>
+
+                  <div class="row">
+                      <div class="col-md-5" id="row_row">
+                          <span><b>Khóa học</b></span>
+                      </div>
+                      <div class="col-md-7" id="row_row">
+                          <span [class]="'badge badge-info'">{{oldCourse.name}}</span>
+                      </div>
+                  </div>
+
+                  <div class="row" style="background-color:whitesmoke">
+                      <div class="col-md-5" id="row_row">
+                          <span><b>Lớp học</b></span>
+                      </div>
+                      <div class="col-md-7" id="row_row">
+                          <span [class]="'badge badge-info'">{{oldClass.name}}</span>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-5" id="row_row">
+                          <span><b> Tổng Học phí</b></span>
+                      </div>
+                      <div class="col-md-7" id="row_row">
+                          <span [class]="'badge badge-success'"> {{oldClass.courseFee}} VNĐ </span>
+                      </div>
+                  </div>
+
+                  <div class="row" style="background-color:whitesmoke">
+                      <div class="col-md-5" id="row_row">
+                          <span><b>Số buổi học</b></span>
+                      </div>
+                      <div class="col-md-7" id="row_row">
+                          <span [class]="'badge badge-success'"> {{oldCourse.numberOfSession}} </span>
+                      </div>
+                  </div>
+
+                  <div class="row">
+                      <div class="col-md-5" id="row_row">
+                          <span><b>Thời gian học</b></span>
+                      </div>
+                      <div class="col-md-7" id="row_row">
+                          <span [class]="'badge badge-warning'"> {{oldCourse.traingTime}} </span>
+                      </div>
+                  </div>
+
+
+                  <div class="row" style="background-color:whitesmoke">
+                      <div class="col-md-5" id="row_row">
+                          <span><b>Ngày bắt đầu</b></span>
+                      </div>
+                      <div class="col-md-7" id="row_row">
+                          <span [class]="'badge badge-warning'"> {{oldClass.startDay | date:'dd-MM-yyyy'}} </span>
+                      </div>
+                  </div>                
+
+              </div>
+
+          </div>
+          <div id="khungvien" style="height: 500px; width: 28%; padding-left: 1%; padding-right: 1%;">
+              <mat-card style="background-color:whitesmoke;">
+                  <mat-form-field style=" width: 96%;text-align: center;">
+                      <mat-label>Chọn lớp</mat-label>
+                      <mat-select [(ngModel)]="tempClassId" (ngModelChange)="inforNewClass()">
+                          <mat-option *ngFor="let item of classList" [value]="item.id">
+                              {{item.name}}
+                          </mat-option>
+                      </mat-select>
+                  </mat-form-field>
+              </mat-card>
+          </div>
+
+          <div id="khungvien" style="height: 500px; width: 36%;">
+              <div class="col-md-12"
+                  style="background-color:#ff8080; padding-left: 30%; padding-top: 10px; font-size: 20px;">
+                  <span>Thông tin lớp mới</span>
+              </div>
+              <div class="col-md-12">
+                  <div class="row">
+                      <div class="col-md-5" id="row_row">
+                          <span><b>Học viên</b></span>
+                      </div>
+                      <div class="col-md-7" id="row_row">
+                          <span [class]="'badge badge-primary'">
+                              {{this.data._learnerInClass.learner.firstName + " " + this.data._learnerInClass.learner.lastName}}
+                          </span>
+                      </div>
+                  </div>
+
+                  <div class="row" style="background-color:whitesmoke">
+                      <div class="col-md-5" id="row_row">
+                          <span><b>Mã HV</b></span>
+                      </div>
+                      <div class="col-md-7" id="row_row">
+                          <span [class]="'badge badge-primary'"> {{this.data._learnerInClass.learner.cardId}} </span>
+                      </div>
+                  </div>
+
+                  <div class="row">
+                      <div class="col-md-5" id="row_row">
+                          <span><b>Khóa học</b></span>
+                      </div>
+                      <div class="col-md-7" id="row_row">
+                          <span [class]="'badge badge-info'">{{newCourse.name}}</span>
+                      </div>
+                  </div>
+
+                  <div class="row" style="background-color:whitesmoke">
+                      <div class="col-md-5" id="row_row">
+                          <span><b>Lớp học mới</b></span>
+                      </div>
+                      <div class="col-md-7" id="row_row">
+                          <span [class]="'badge badge-info'">{{newClass.name}}</span>
+                      </div>
+                  </div>
+
+                  <div class="row">
+                      <div class="col-md-5" id="row_row">
+                          <span><b>Học phí</b></span>
+                      </div>
+                      <div class="col-md-7" id="row_row">
+                          <span [class]="'badge badge-success'">{{newClass.courseFee}} VNĐ</span>
+                      </div>
+                  </div>
+
+
+                  <div class="row" style="background-color:whitesmoke">
+                      <div class="col-md-5" id="row_row">
+                          <span><b>Số buổi học</b></span>
+                      </div>
+                      <div class="col-md-7" id="row_row">
+                          <span [class]="'badge badge-success'">{{newCourse.numberOfSession}}</span>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-5" id="row_row">
+                          <span><b>Thời gian học</b></span>
+                      </div>
+                      <div class="col-md-7" id="row_row">
+                          <span [class]="'badge badge-warning'">{{newCourse.traingTime}}</span>
+                      </div>
+                  </div>
+
+                  <div class="row" style="background-color:whitesmoke">
+                      <div class="col-md-5" id="row_row">
+                          <span><b>Ngày bắt đầu</b></span>
+                      </div>
+                      <div class="col-md-7" id="row_row">
+                          <span [class]="'badge badge-warning'">{{newClass.startDay | date:'dd-MM-yyyy'}}</span>
+                      </div>
+                  </div>
+
+              </div>
+          </div>
+      </div>
+  </div>
+
+</mat-card>
+<mat-dialog-actions align="end">
+  <button type="button" mat-raised-button color="primary" tabindex="-1" (click) = "ChuyenLop()" *ngIf="show">
+      <mat-icon>check</mat-icon>
+      Chuyển lớp
+  </button>
+  <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">
+      <mat-icon>cancel</mat-icon>
+      Hủy
+  </button>
+</mat-dialog-actions>

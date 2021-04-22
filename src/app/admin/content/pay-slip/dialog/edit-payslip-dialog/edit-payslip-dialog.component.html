@@ -1,0 +1,147 @@
+<h1 mat-dialog-title>Cập nhật phiếu chi</h1>
+<form novalidate [formGroup]="paySlipFormGroup" (ngSubmit)="update_PaySlip()">
+    <div mat-dialog-content>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Nhân viên chi</mat-label>
+                    <mat-select [(ngModel)]="paySlip.personnelId" formControlName="personnelId" required
+                        style="text-align: center;">
+                        <mat-option *ngFor="let item of personnel" [value]="item.id" style="text-align: center;">
+                            {{item.firstName + " " + item.lastName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Loại chi</mat-label>
+                    <mat-select [(ngModel)]="paySlip.paySlipTypeId" formControlName="paySlipTypeId" required>
+                        <mat-option *ngFor="let item of paySlipType" [value]="item.id" style="text-align: center;">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Ngày chi</mat-label>
+                    <input [(ngModel)]="paySlip.date" formControlName="date" [matDatepicker]="picker1" matInput
+                        placeholder="Choose a date of payment" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Trạng thái</mat-label>
+                    <mat-select [(ngModel)]="paySlip.status" formControlName="status" required>
+                        <mat-option *ngFor="let item of status" [value]="item.code" style="text-align: center;">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Người nhận</mat-label>
+                    <input [(ngModel)]="paySlip.receiver" formControlName="receiver" matInput
+                        placeholder="Nhập người nhận">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Tổng tiền</mat-label>
+                    <input type="number" [(ngModel)]="paySlip.total" formControlName="total" matInput
+                        placeholder="Nhập tổng tiền" required>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Nội dung chi</mat-label>
+                    <textarea [(ngModel)]="paySlip.content" formControlName="content" matInput
+                        placeholder="Nhập ghi chú" required cdkTextareaAutosize cdkAutosizeMinRows="2"
+                        cdkAutosizeMaxRows="2"></textarea>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Ghi chú</mat-label>
+                    <textarea [(ngModel)]="paySlip.note" formControlName="note" matInput placeholder="Nhập ghi chú"
+                        cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <mat-dialog-actions align="end">
+            <button ngxPrint
+            styleSheetFile="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            printSectionId="testprint" [useExistingCss]="true" type="submit" mat-raised-button
+            color="primary" tabindex="-1">
+            <mat-icon>print</mat-icon>
+            In hóa đơn
+        </button>
+        <button type="submit" mat-raised-button color="primary" tabindex="-1">
+            <mat-icon>check</mat-icon>
+            Lưu
+        </button>
+        <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">
+            <mat-icon>cancel</mat-icon>
+            Hủy
+        </button>
+    </mat-dialog-actions>
+
+    <div class="container-fluid">
+        <mat-card hidden="true" style="margin-top: 5px; margin-bottom: 10px;" id="testprint">
+            <div style='width: 100%; float: left;'>
+                <div style='width: 50%;float: left;'>
+                    <div style='width: 100%;float: left; text-align: center '>
+                        Trung Tâm Tiếng Anh I-English
+                    </div>
+                    <div style='width: 100%;float: left;  text-align: center'>
+                        ĐC: Cerella Villa, Số 33, Plot 11B, Lê Hồng Phong, Đằng Hải, Hải An, Hải Phòng
+                    </div>
+                </div>
+                <div style='width: 50%;float: right; text-align: center;'>
+                    Mã phiếu: <span style="font-weight: bold; font-size: 17px;">{{paySlip.id}}</span>
+                </div>
+            </div>
+            <br><br><br>
+            <div style=' width: 100%; text-align: center;'>
+                <h2>PHIẾU CHI</h2>
+                <p style="font-size: 16px;">(Ngày chi: {{paySlip.date | date:'dd/MM/yyyy'}}) </p>
+                <br>
+                <div class="row">
+                        <div class="col-md-2">
+
+                            </div>
+                    <div class="col-md-3">
+                        <p style="text-align: left;">Nhân viên chi: <span style=" font-size: 17px;">
+                                {{tennhanvien}}</span></p>
+                        <p style="text-align: left;">Người nhận : <span
+                                style=" font-size: 17px;">{{paySlip.receiver}}</span></p>
+                    </div>
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-4">
+                        <p style="text-align: left;">Loại chi: <span style=" font-size: 17px;">
+                                {{tenloaichi}}</span></p>
+                        <p style="text-align: left;">Số tiền : <span
+                                style=" font-size: 17px;">{{paySlip.total  | currency:'JPY':''}}
+                                VNĐ</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div style='width: 100%; float: left;'>
+                    <i style="margin-left: 100px;">*Ghi chú: {{paySlip.note}}</i>
+                </div>
+                <br><br><br>
+                <div style='width: 100%; float: right;'>
+                    <div style='width: 30%;float: left; text-align: center;'><b>Người chi</b><br><i>(Ký và ghi rõ họ
+                            tên)</i></div>
+                    <div style='width: 30%;float: right; text-align: center;'><b>Người nhận</b><br><i>(Ký và ghi rõ họ
+                            tên)</i></div>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</form>

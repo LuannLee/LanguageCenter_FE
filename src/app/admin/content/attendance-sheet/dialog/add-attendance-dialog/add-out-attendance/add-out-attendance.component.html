@@ -1,0 +1,41 @@
+<h1 mat-dialog-title>Điểm danh ngoài lớp</h1>
+<form novalidate [formGroup]="FormGroup" (ngSubmit)="createAttendanceOut()">
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-md-12">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Lớp học</mat-label>
+          <mat-select [(ngModel)]="classSelected" formControlName="class" required style="text-align: right;"
+            (valueChange)="changeClass($event)">
+            <mat-option *ngFor="let item of classes" [value]="item.id" style="text-align: center;">
+              {{ item.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Học viên</mat-label>
+          <mat-select [(ngModel)]="learnerSelected" formControlName="learner" required style="text-align: right;">
+            <mat-option *ngFor="let item of learners" [value]="item.id" style="text-align: center;">
+              {{ item.firstName + " " + item.lastName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+      </div>
+    </div>
+  </div>
+
+  <mat-dialog-actions align="end">
+    <button type="submit" mat-raised-button color="primary" tabindex="-1">
+      <mat-icon>add_circle</mat-icon>
+      Điểm danh
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">
+      <mat-icon>cancel</mat-icon>
+      Hủy
+    </button>
+  </mat-dialog-actions>
+</form>

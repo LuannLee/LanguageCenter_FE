@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>{{dataOfConfirm.title}}</h1>
+
+<div mat-dialog-content>
+    {{dataOfConfirm.message}}
+</div>
+
+<mat-dialog-actions align="end">
+    <button type="button" mat-raised-button color="primary" tabindex="-1" (click)="createCourse()">
+        <mat-icon>check</mat-icon>
+        Xác nhân
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">
+        <mat-icon>close</mat-icon>
+        Hủy
+    </button>
+</mat-dialog-actions>

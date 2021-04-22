@@ -1,0 +1,47 @@
+
+  .mat-column-select {
+    overflow: initial;
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+  
+  table {
+    text-align: center !important;
+    width: 100%;
+  }
+  
+  .mat-header-cell {
+    text-align: center;
+  }
+  
+  .mat-header-cell {
+    font-size: 16px;
+    font: bold; 
+  }
+
+  #khung_thongtinlop {
+    padding-top: 20px;
+    padding-left: 15px;
+    border:solid 2px royalblue;
+    border-radius: 10px;
+  }
+
+  .tencot {
+    background-color:#2466B0;
+    color: white;
+  }
+
+
+table.table-style-three tr:hover td {
+  cursor: pointer;
+}
+table.table-style-three tr:nth-child(even) td{
+  background-color: #DAE7F7;
+}
+
+.mat-row:hover {
+  background: lightslategray;
+  opacity: 0.7;
+}

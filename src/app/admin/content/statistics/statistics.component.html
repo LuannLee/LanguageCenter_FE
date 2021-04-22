@@ -1,0 +1,412 @@
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <mat-card style="height: 80%;">
+      <mat-card-header class="card-container">
+        <mat-card-title style="color: gray;"><b>Danh sách học viên </b></mat-card-title>
+      </mat-card-header>
+
+      <div class="row">
+        <div class="col-md-7">
+          <div class="row col-md-12">
+            <div class="col-md-9">
+              <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                <mat-button-toggle (click)="getLearnerWithCondition(4)">Đã có lớp</mat-button-toggle>
+                <mat-button-toggle (click)="getLearnerWithCondition(1)">Chưa có lớp</mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+            <div class="col-md-3">
+              <button class="addAndSearch" mat-flat-button color="accent" tabindex="-1"
+                style="float: right; margin-right: 20px" (click)="addLearner()" *ngIf="permissionOfFunction.canCreate">
+
+                Tạo hồ sơ
+              </button>
+            </div>
+          </div>
+          <mat-card-content style="margin-top: 20px;">
+            <table mat-table [dataSource]="dataSource">
+
+              <ng-container matColumnDef="index">
+                <th mat-header-cell *matHeaderCellDef> STT</th>
+                <td mat-cell *matCellDef="let element; let i=index"> {{i+1}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="cardId">
+                <th mat-header-cell *matHeaderCellDef> Mã HV</th>
+                <td mat-cell *matCellDef="let element"> {{element.cardId}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Tên HV</th>
+                <td mat-cell *matCellDef="let element"> {{element.firstName + " " + element.lastName}}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="year">
+                <th mat-header-cell *matHeaderCellDef> Giới tính</th>
+                <td mat-cell *matCellDef="let element"> {{(element.sex)==true?'Nam':'Nữ'}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="sex">
+                <th mat-header-cell *matHeaderCellDef> Năm sinh</th>
+                <td mat-cell *matCellDef="let element"> {{element.birthday | date: 'yyyy'}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="guest">
+                <th mat-header-cell *matHeaderCellDef> Đối tượng</th>
+                <td mat-cell *matCellDef="let element"> {{element.guestTypeName}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row (click)="inforLearner(row.cardId)" *matRowDef="let row; columns: displayedColumns;">
+              </tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+            </mat-paginator>
+          </mat-card-content>
+        </div>
+        <div class=" row col-md-5">
+          <div class="col-md-1"></div>
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-7">
+                <mat-form-field appearance="outline">
+                  <mat-label>Nhập mã học viên</mat-label>
+                  <input matInput placeholder="Nhập mã học viên" [(ngModel)]="keyWord">
+                </mat-form-field>
+              </div>
+              <div class="col-md-1"></div>
+              <div class="col-md-3">
+                <button mat-flat-button tabindex="-1" style="float: right; margin-right: 20px" (click)="Find()">
+                  <mat-icon>search</mat-icon>
+                </button>
+              </div>
+            </div>
+            <div class="card bg-light" style="margin-top: 8%;">
+              <div class="card-body pt-0" style="margin-top:20px;">
+                <div class="row">
+                  <div class="col-7">
+                    <h2 class="lead"><b>{{inforlearner.firstName + " " + inforlearner.lastName}}</b>
+                    </h2>
+                    <p class="text-muted text-sm"><b>Mã thẻ: </b> {{inforlearner.cardId}} </p>
+                    <p class="text-muted text-sm"><b>Đối tượng: </b> {{inforlearner.guestTypeName}}
+                    </p>
+                    <p class="text-muted text-sm"><b>Giới tính: </b>
+                      {{(inforlearner.sex)==true?"Nam":"Nữ"}} </p>
+                    <p class="text-muted text-sm"><b>Trạng thái: </b><span
+                        [class]="(inforlearner.status == 1?'badge badge-success':(inforlearner.status == 0?'badge badge-danger':'badge badge-warning'))">
+                        {{(inforlearner.status)==1?"Hoạt động":((inforlearner.status)==0?"Nghỉ":"Hẹn đi học")}}
+                      </span></p>
+                  </div>
+                  <div class="col-5 text-center">
+                    <img src="{{inforlearner.image}}" alt="" class="img-circle img-fluid">
+                  </div>
+                  <!-- nội dung dưới ảnh -->
+                  <div class="col-12">
+                    <ul class="ml-4 mb-0 fa-ul text-muted">
+                      <p></p>
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Địa chỉ:
+                        {{inforlearner.address}}</li>
+                      <p></p>
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
+                        SĐT #:
+                        {{inforlearner.phone}}</li>
+                      <p></p>
+                      <li class="small"><span class="fa-li"><i class="fas fa-envelope"></i></span>
+                        Email: {{inforlearner.email}}
+                      </li>
+                      <p></p>
+                      <li class="small"><span class="fa-li"><i class="fab fa-facebook"></i></span>
+                        Facebook: {{inforlearner.facebook}}
+                      </li>
+                      <p></p>
+                      <li class="small"><span class="fa-li"><i class="fas fa-user-friends"></i></span>
+                        Phụ huynh: {{inforlearner.parentFullName}}
+                      </li>
+                      <p></p>
+                      <li class="small"><span class="fa-li"><i class="fas fa-phone-volume"></i></span>
+                        SĐT # phụ huynh: {{inforlearner.parentPhone}}
+                      </li>
+                      <p></p>
+                      <li class="small"><span class="fa-li"><i class="far fa-comment-dots"></i></span>
+                        Ghi chú: {{inforlearner.note}}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- controls-->
+            
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </mat-card>
+  </div>
+</section>
+<!-- /.content -->
+<section class="content">
+  <div class="container-fluid">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title style="color: gray; ">
+            <b>Danh sách lớp đã học</b>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <!--nội dung bên trong ở đây-->
+        <p></p>
+        <mat-card-content>
+          <div class="col-md-12" style="margin-top: 20px;"></div>
+          <table mat-table [dataSource]="dataSourceClass">
+
+            <ng-container matColumnDef="index">
+              <th mat-header-cell *matHeaderCellDef style="width: 5%;" class="tencot"> STT</th>
+              <td mat-cell *matCellDef="let element; let i=index"> {{i+1}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="className">
+              <th mat-header-cell *matHeaderCellDef class="tencot"> Lớp học</th>
+              <td mat-cell *matCellDef="let element"> {{element.name}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="startDay">
+              <th mat-header-cell *matHeaderCellDef class="tencot"> Ngày bắt đầu</th>
+              <td mat-cell *matCellDef="let element">{{element.startDay | date: 'dd-MM-yyyy'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="endDay">
+              <th mat-header-cell *matHeaderCellDef class="tencot"> Ngày kết thúc</th>
+              <td mat-cell *matCellDef="let element">{{element.endDay | date: 'dd-MM-yyyy'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef class="tencot"> Trạng thái </th>
+              <td mat-cell *matCellDef="let element">
+                <span [class]="(element.status == 0?'badge badge-danger':'badge badge-success')">
+                  {{(element.status == 0)?"Kết thúc":"Đang học"}}
+                </span>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="controls">
+              <th mat-header-cell *matHeaderCellDef class="tencot"> Thao tác </th>
+              <td mat-cell *matCellDef="let element">
+                <button class="addAndSearch" mat-flat-button color="primary" tabindex="-1"
+                  (click)="moveStudyProcessWithClassId(element.id)">
+
+                  Xem lớp
+                </button>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsClass"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsClass;">
+            </tr>
+          </table>
+        </mat-card-content>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <!--Bảng điểm các lớp đã học-->
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title style="color: gray;">
+            <b>Bảng điểm</b>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <!--nội dung bên trong ở đây-->
+        <p></p>
+        <mat-card class=" row card bg-light" *ngFor="let item of Diem">
+          <div style="font-size: 18px;"><b> Lớp : {{item.class.name}} </b></div> <br>
+          <div class="col-md-10" style="margin-left:10%;">
+            <div style="font-size: 15px;"><b>Điểm định kì </b></div> <br>
+            <table mat-table [dataSource]="item.periodicPoints">
+
+              <ng-container matColumnDef="index">
+                <th mat-header-cell *matHeaderCellDef style="width: 5%;" class="tencot"> STT</th>
+                <td mat-cell *matCellDef="let element; let i=index"> {{i+1}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="week">
+                <th mat-header-cell *matHeaderCellDef class="tencot"> Tuần</th>
+                <td mat-cell *matCellDef="let element"> {{element.week}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="point">
+                <th mat-header-cell *matHeaderCellDef class="tencot"> Điểm</th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.detailPointOfLearner.point}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="averagePoint">
+                <th mat-header-cell *matHeaderCellDef class="tencot"> Điểm trung bình</th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.detailPointOfLearner.averagePoint}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="sortedByPoint">
+                <th mat-header-cell *matHeaderCellDef class="tencot"> Xếp hạng</th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.detailPointOfLearner.sortedByPoint}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="sortedByAveragePoint">
+                <th mat-header-cell *matHeaderCellDef class="tencot"> Xếp hạng TB</th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.detailPointOfLearner.sortedByAveragePoint}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsDiemDinhKi"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsDiemDinhKi;">
+              </tr>
+            </table>
+            <div style="font-size: 15px; margin-top: 30px;"><b>Điểm cuối khóa</b></div> <br>
+            <div class="row col-md-12">
+              <div class="col-md-3">
+                <div class="row">
+                  <div class="col-md-4 lable1">Điểm Nghe</div>
+                  <div class="col-md-6">{{item.endingCoursePoint.listeningPoint}}</div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 lable1">Điểm Nói</div>
+                  <div class="col-md-6">{{item.endingCoursePoint.sayingPoint}}</div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 lable1">Điểm Đọc</div>
+                  <div class="col-md-6">{{item.endingCoursePoint.readingPoint}}</div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 lable1">Điểm Viết</div>
+                  <div class="col-md-6">{{item.endingCoursePoint.writingPoint}}</div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="row">
+                  <div class="col-md-5 lable1">Tổng điểm</div>
+                  <div class="col-md-6">{{item.endingCoursePoint.totalPoint}}</div>
+                </div>
+                <div class="row">
+                  <div class="col-md-5 lable1">Điểm trung bình</div>
+                  <div class="col-md-6">{{item.endingCoursePoint.averagePoint}}</div>
+                </div>
+                <div class="row">
+                  <div class="col-md-5 lable1">Xếp hạng</div>
+                  <div class="col-md-6">{{item.endingCoursePoint.sortOrder}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </mat-card>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title style="color: gray;">
+            <b>Lịch sử đóng tiền</b>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <!--nội dung bên trong ở đây-->
+        <p></p>
+        <mat-card-content>
+          <div class="col-md-12" style="margin-top: 20px;"></div>
+          <mat-card-content>
+            <div class="col-md-12" style="margin-top: 20px;"></div>
+            <mat-accordion>
+              <mat-expansion-panel *ngFor="let item of receipts" (opened)="panelOpenState = true"
+                (closed)="panelOpenState = false" style="margin-top: 10px;">
+                <mat-expansion-panel-header (click)="getReceiptDetailsByReceiptId(item.id)"
+                  style="background-color: lightgray;">
+
+                  <mat-panel-title>
+                    <b>Ngày thu : </b> {{item.collectionDate | date: 'dd-MM-yyyy'}}
+                  </mat-panel-title>
+                  <mat-panel-title>
+                    <b>Loại thu : </b> {{item.receiptTypeName}}
+                  </mat-panel-title>
+                  <mat-panel-title>
+                    <b>Tổng tiền : </b> {{item.totalAmount}} VNĐ
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Chi tiết phiếu thu.</p>
+                <table mat-table [dataSource]="dataSourceReceiptsDetail" style="width: 100%;">
+
+                  <ng-container matColumnDef="index">
+                    <th mat-header-cell *matHeaderCellDef style="width: 10%;" class="tencot">
+                      STT
+                    </th>
+                    <td mat-cell *matCellDef="let element; let i=index"> {{i+1}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="languageClassName">
+                    <th mat-header-cell *matHeaderCellDef style="width: 20%; " class="tencot">
+                      Lớp
+                      học </th>
+                    <td mat-cell *matCellDef="let element">{{element.languageClassName}}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="month">
+                    <th mat-header-cell *matHeaderCellDef style="width: 10%; " class="tencot">
+                      Tháng
+                      thu</th>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.month + "/" + element.year }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="tuition">
+                    <th mat-header-cell *matHeaderCellDef style="width: 10%;" class="tencot">
+                      Học
+                      phí</th>
+                    <td mat-cell *matCellDef="let element"> {{element.tuition}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="fundMoney">
+                    <th mat-header-cell *matHeaderCellDef style="width: 10%;" class="tencot">
+                      Tiền
+                      quỹ</th>
+                    <td mat-cell *matCellDef="let element"> {{element.fundMoney}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="infrastructureMoney">
+                    <th mat-header-cell *matHeaderCellDef style="width: 10%;" class="tencot">
+                      Tiền
+                      CSVC</th>
+                    <td mat-cell *matCellDef="let element"> {{element.infrastructureMoney}}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="otherMoney">
+                    <th mat-header-cell *matHeaderCellDef style="width: 10%;" class="tencot">
+                      Tiền
+                      khác</th>
+                    <td mat-cell *matCellDef="let element"> {{element.otherMoney}}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="totalMoney">
+                    <th mat-header-cell *matHeaderCellDef style="width: 10%;" class="tencot">
+                      Tổng
+                      tiền</th>
+                    <td mat-cell *matCellDef="let element"> {{element.totalMoney}}</td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumnsReceiptsDetail"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumnsReceiptsDetail;">
+                  </tr>
+                </table>
+              </mat-expansion-panel>
+
+            </mat-accordion>
+
+          </mat-card-content>
+
+        </mat-card-content>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</section>

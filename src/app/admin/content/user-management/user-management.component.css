@@ -1,0 +1,17 @@
+table {
+  width: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+ng-template {
+  margin-right: 8px;
+}
+
+.mat-row:hover {
+  background: lightslategray;
+  opacity: 0.7;
+}
+

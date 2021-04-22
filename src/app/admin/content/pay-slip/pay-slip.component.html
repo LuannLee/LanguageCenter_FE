@@ -1,0 +1,139 @@
+<mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
+
+<section class="content" style="margin-top: 1%">
+  <div class="container-fluid">
+    <mat-card>
+      <mat-card-header class="card-container">
+        <mat-card-title>Phiếu chi</mat-card-title>
+        <mat-card-subtitle>Danh mục Phiếu chi</mat-card-subtitle>
+      </mat-card-header>
+      <div class="row">
+        <div class="col-md-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Mã phiếu chi</mat-label>
+            <input matInput placeholder="Nhập mã phiếu chi" [(ngModel)]="keyWord">
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Từ ngày</mat-label>
+            <input [(ngModel)]="startDate" [matDatepicker]="picker1" matInput placeholder="Từ ngày">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Dến ngày</mat-label>
+            <input [(ngModel)]="endDate" [matDatepicker]="picker2" matInput placeholder="Đến ngày">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Chọn trạng thái</mat-label>
+            <mat-select [(ngModel)]="statusSelected">
+              <mat-option *ngFor="let s of status" value="{{s.code}}">
+                {{s.Name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Chọn phiếu chi</mat-label>
+            <mat-select [(ngModel)]="keywordPhieuChi">
+              <mat-option *ngFor="let s of paySlipType" value="{{s.id}}">
+                {{s.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-1">
+          <button mat-raised-button color="primary" tabindex="-1" style="float: right; margin-right: 20px"
+            (click)="find_PaySlip()">
+            <mat-icon>search</mat-icon>
+            Tìm kiếm
+          </button>
+        </div>
+      </div>
+    </mat-card>
+    <mat-card style="margin-top: 0.5%">
+      <mat-card-header style="float: right;">
+        <mat-card-title>
+          <button mat-raised-button color="primary" tabindex="-1" (click)="openCreate_PaySlip()"
+            *ngIf="permissionOfFunction.canCreate">
+            
+            Thêm phiếu chi
+          </button>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table mat-table [dataSource]="dataSource">
+
+          <ng-container matColumnDef="index">
+            <th mat-header-cell *matHeaderCellDef> STT</th>
+            <td mat-cell *matCellDef="let element; let i=index"> {{i+1}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> Mã phiếu chi </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="paySlipTypeName">
+            <th mat-header-cell *matHeaderCellDef> Loại phiếu chi </th>
+            <td mat-cell *matCellDef="let element"> {{element.paySlipTypeName}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Ngày chi</th>
+            <td mat-cell *matCellDef="let element"> {{element.date | date : 'dd-MM-yyyy'}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="receiver">
+            <th mat-header-cell *matHeaderCellDef> Người nhận</th>
+            <td mat-cell *matCellDef="let element"> {{element.receiver}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="total">
+            <th mat-header-cell *matHeaderCellDef> Tổng tiền (VNĐ)</th>
+            <td mat-cell *matCellDef="let element"> {{element.total | currency:'VND':''}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Trạng thái </th>
+            <td mat-cell *matCellDef="let element">
+              <span [class]='styleOfStatus(element)'>
+                {{ (element.status == 1)?"Hoàn thành":((element.status == 2)?"Chờ xử lý":"Đã hủy") }}
+              </span>
+            </td>
+          </ng-container>
+
+
+
+          <ng-container matColumnDef="controls">
+            <th mat-header-cell *matHeaderCellDef> Xóa </th>
+            <td mat-cell *matCellDef="let element">
+
+              <button mat-icon-button (click)="delete_PaySlip(element.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row (click)="openEdit_PaySlip(row)" *matRowDef="let row; columns: displayedColumns;">
+          </tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+        </mat-paginator>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>

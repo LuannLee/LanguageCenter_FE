@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Thông báo</h1>
+<hr>
+
+
+Bạn có xác nhận tác vụ này?
+<br>
+{{ message }}
+
+<hr>
+<mat-dialog-actions align="end">
+  <button type="button" mat-raised-button color="primary" tabindex="-1" (click)="sendResult()">
+    <mat-icon>check</mat-icon>
+  </button>
+  <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-dialog-actions>
+

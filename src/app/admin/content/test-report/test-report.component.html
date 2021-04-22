@@ -1,0 +1,142 @@
+<div class="container-fluid">
+    <mat-card>
+        <mat-card-header class="card-container">
+            <mat-card-title style="font-size: 24px;"><b>Báo cáo điểm định kỳ</b></mat-card-title>
+            <mat-card-subtitle style="font-size: 18px;">Báo cáo</mat-card-subtitle>
+        </mat-card-header>
+        <div class="row">
+            <div class="col-md-12">
+                <button ngxPrint styleSheetFile="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                    printSectionId="testprint" [useExistingCss]="true" mat-raised-button color="primary" tabindex="-1"
+                    style="float: right; margin-right: 20px">
+                    <mat-icon>print</mat-icon>
+                    In báo cáo
+                </button>
+
+                <button mat-raised-button color="primary" tabindex="-1" style="float: right; margin-right: 20px">
+                    <mat-icon>pageview
+                    </mat-icon>
+                    Hiển thị
+                </button>
+            </div>
+        </div>
+    </mat-card>
+</div>
+<div class="container-fluid">
+    <mat-card style="margin-top: 5px; margin-bottom: 10px;" id="testprint">
+        <div style='width: 100%; float: left;'>
+            <div style='width: 50%;float: left;'>
+                <div style='width: 100%;float: left; text-align: center '>
+                    Trung Tâm Ngoại Ngữ PLC
+                </div>
+                <div style='width: 100%;float: left;  text-align: center'>
+                    ĐC: 97/7C - Lê Hồng Phong - Ngô Quyền - Hải Phòng
+                </div>
+            </div>
+            <div style='width: 50%;float: right; text-align: center;'>
+                Mã phiếu: <span style="font-weight: bold; font-size: 17px;">1262765691</span>
+            </div>
+        </div>
+        <br><br><br>
+        <div style=' width: 100%; text-align: center;'>
+            <h2>Phiếu thu tiền học phí</h2>
+            <p style="font-size: 16px;">(Ngày thu: 18/11/2019 - Loại thu: Học phí)</p>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <p style="text-align: left;">Họ và tên: <span style="font-weight: bold; font-size: 17px;">Hoàng Tiến
+                            Dũng</span></p>
+                    <p style="text-align: left;">Số điện thoại: <span
+                            style="font-weight: bold; font-size: 17px;">0924050098</span></p>
+                    <p style="text-align: left;">Địa chỉ: <span style="font-weight: bold; font-size: 17px;">Số 4c26, Khu
+                            1, Lê Hồng Phong, Ngô Quyền, Hải Phòng</span></p>
+
+                </div>
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-4">
+                    <p style="text-align: left;">Người nộp: <span style="font-weight: bold; font-size: 17px;">Hoàng Tiến
+                            Dũng</span></p>
+                    <p style="text-align: left;">Người thu: <span style="font-weight: bold; font-size: 17px;">Nhân
+                            viên</span>
+                    </p>
+                    <p style="text-align: left;">Tổng tiền: <span
+                            style="font-weight: bold; font-size: 17px;">12000</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope='col' style="text-align: center;">STT</th>
+                            <th scope='col'>Lớp</th>
+                            <th scope='col' style="text-align: center;">Tháng</th>
+                            <th scope='col' style="text-align: center;">Năm</th>
+                            <th scope='col' style="text-align: center;">Học phí</th>
+                            <th scope='col' style="text-align: center;">Tiền quỹ</th>
+                            <th scope='col' style="text-align: center;">Tiền CSVC</th>
+                            <th scope='col' style="text-align: center;">Thu khác</th>
+                            <th scope='col' style="text-align: center;">Tổng tiền</th>
+                            <th scope='col' style="text-align: center;">Ghi chú</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope='row' style="text-align: center;">1</th>
+                            <td>Chịch nhau 1</td>
+                            <td style="text-align: center;">11</td>
+                            <td style="text-align: center;">2019</td>
+                            <td style="text-align: center;">9000</td>
+                            <td style="text-align: center;">1000</td>
+                            <td style="text-align: center;">1000</td>
+                            <td style="text-align: center;">1000</td>
+                            <td style="text-align: center;">12000</td>
+                            <td style="text-align: center;">con cu</td>
+                        </tr>
+                        <tr>
+                            <th scope='row' style="text-align: center;">1</th>
+                            <td>Chịch nhau 1</td>
+                            <td style="text-align: center;">11</td>
+                            <td style="text-align: center;">2019</td>
+                            <td style="text-align: center;">9000</td>
+                            <td style="text-align: center;">1000</td>
+                            <td style="text-align: center;">1000</td>
+                            <td style="text-align: center;">1000</td>
+                            <td style="text-align: center;">12000</td>
+                            <td style="text-align: center;">con cu</td>
+                        </tr>
+                    </tbody>
+                    <tfoot style="font-size: 20px; font-weight: bold;">
+                        <tr>
+                            <th scope='row' style="text-align: center;">#</th>
+                            <td style="font-size: 18px; font-weight: bold;">Tổng tiền :</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="font-size: 18px; font-weight: bold; text-align: center;">1000000</td>
+                            <td></td>
+                        </tr>                      
+                    </tfoot>
+                </table>
+
+            </div>
+        
+            <div style='width: 100%; float: left;'>
+               <i style="margin-left: 50px;">*Ghi chú: Thế này đã ổn áp chưa hay tấu hài địt mẹ mày</i>
+            </div>
+            <br><br><br>
+            <div style='width: 100%; float: right;'>
+                <div style='width: 30%;float: left; text-align: center;'><b>Người nộp</b><br><i>(Ký và ghi rõ họ
+                        tên)</i></div>
+                <div style='width: 30%;float: right; text-align: center;'><b>Người Thu</b><br><i>(Ký và ghi rõ họ
+                        tên)</i></div>
+            </div>
+        </div>
+    </mat-card>
+</div>

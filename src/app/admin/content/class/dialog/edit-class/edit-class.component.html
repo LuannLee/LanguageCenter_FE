@@ -1,0 +1,109 @@
+<h1 mat-dialog-title>Cập nhật lớp học</h1>
+<form novalidate [formGroup]="classFormGroup" (ngSubmit)="updateClass()">
+    <div mat-dialog-content>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-11">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Khóa học</mat-label>
+                        <mat-select [(ngModel)]="class.courseId" formControlName="courseId" required
+                            style="text-align: center;">
+                            <mat-option *ngFor="let item of courses" [value]="item.id" style="text-align: center;">
+                                {{item.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tên lớp học</mat-label>
+                        <input [(ngModel)]="class.name" formControlName="name" matInput placeholder="Nhập tên lớp học"
+                            required>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Sĩ số</mat-label>
+                        <input type="number" [(ngModel)]="class.maxNumber" formControlName="maxNumber" matInput
+                            placeholder="Nhập sĩ số" required class="numberStyle">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Học phí theo khóa</mat-label>
+                        <input type="number" formControlName="courseFee" [(ngModel)]="class.courseFee" matInput
+                            placeholder="Nhập giá" required class="numberStyle">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Học phí theo tháng</mat-label>
+                        <input type="number" [(ngModel)]="class.monthlyFee" formControlName="monthlyFee" matInput
+                            placeholder="Nhập giá" required class="numberStyle">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Học phí theo buổi</mat-label>
+                        <input type="number" [(ngModel)]="class.lessonFee" formControlName="lessonFee" matInput
+                            placeholder="Nhập giá" required class="numberStyle">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-11">
+                    <!-- <mat-form-field appearance="outline">
+                        <mat-label>Lương giáo viên</mat-label>
+                        <input type="number" [(ngModel)]="class.wageOfLecturer" formControlName="wageOfLecturer"
+                            matInput placeholder="Nhập sĩ số" required class="numberStyle">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Lương trợ giảng</mat-label>
+                        <input type="number" [(ngModel)]="class.wageOfTutor" formControlName="wageOfTutor" matInput
+                            placeholder="Nhập sĩ số" required class="numberStyle">
+                    </mat-form-field> -->
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Ngày bắt đầu</mat-label>
+                        <input [(ngModel)]="class.startDay" formControlName="startDay" [matDatepicker]="picker1"
+                            matInput placeholder="Choose a date start" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Ngày kết thúc</mat-label>
+                        <input [(ngModel)]="class.endDay" formControlName="endDay" [matDatepicker]="picker2" matInput
+                            placeholder="Choose a date end" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Trạng thái</mat-label>
+                        <mat-select [(ngModel)]="class.status" formControlName="status" required
+                            style="text-align: center;">
+                            <mat-option *ngFor="let item of status" [value]="item.value" style="text-align: center;">
+                                {{item.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Ghi chú</mat-label>
+                        <textarea [(ngModel)]="class.note" matInput placeholder="Nhập ghi chú" cdkTextareaAutosize
+                            cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <mat-dialog-actions align="end">
+        <button type="submit" mat-raised-button color="primary" tabindex="-1">
+            <mat-icon>check</mat-icon>
+            Update
+        </button>
+        <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">
+            <mat-icon>cancel</mat-icon>
+            Hủy
+        </button>
+    </mat-dialog-actions>
+</form>

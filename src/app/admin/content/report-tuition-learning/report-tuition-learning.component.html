@@ -1,0 +1,123 @@
+<mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
+
+<div class="container-fluid">
+    <mat-card>
+        <mat-card-header class="card-container">
+            <mat-card-title style="font-size: 24px;"><b>Báo cáo thu học phí</b></mat-card-title>
+            <mat-card-subtitle style="font-size: 18px;">Báo cáo thu học phí</mat-card-subtitle>
+        </mat-card-header>
+        <div class="row">
+            <div class="col-md-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Chọn tháng</mat-label>
+                    <mat-select [(ngModel)]="monthSelected">
+                        <mat-option *ngFor="let month of months" value={{month}}>
+                            {{month}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Chọn năm</mat-label>
+                    <mat-select [(ngModel)]="yearSelected">
+                        <mat-option *ngFor="let year of years" value={{year}}>
+                            {{year}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-8">
+                <button  id ="printClick" ngxPrint styleSheetFile="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                    printSectionId="testprint" [useExistingCss]="true" mat-raised-button color="primary" tabindex="-1"
+                    style="float: right; margin-right: 20px">
+                    <mat-icon>print</mat-icon>
+                    In báo cáo
+                </button>
+
+                <button (click)="getReceiptDetailReport()" mat-raised-button color="primary" tabindex="-1" style="float: right; margin-right: 20px">
+                    <mat-icon>remove_red_eye
+                    </mat-icon>
+                    Hiển thị
+                </button>
+            </div>
+        </div>
+    </mat-card>
+</div>
+<div class="container-fluid" *ngIf="checkView">
+    <mat-card style="margin-top: 5px; margin-bottom: 10px;" id="testprint">
+        <div style='width: 100%; float: left;'>
+            <div style='width: 50%;float: left;'>
+                <div style='width: 100%;float: left; text-align: center '>
+                    Trung Tâm Ngoại Ngữ I-English
+                </div>
+                <div style='width: 100%;float: left;  text-align: center'>
+                    ĐC: Cerella Villa, No 33, Plot 11B, Lê Hồng Phong, Đằng Hải, Hải An, Hải Phòng
+                </div>
+            </div>
+        </div>
+        <br><br><br>
+        <div style=' width: 100%; text-align: center;'>
+            <h2>DANH SÁCH THU HỌC PHÍ</h2>
+            <p style="font-size: 16px;">(Từ tháng: {{monthSelected}} - đến tháng: {{monthSelected}}/{{yearSelected}})</p>
+            <br>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope='col' style="text-align: center;">STT</th>
+                            <th scope='col'>Ngày thu</th>
+                            <th scope='col' style="text-align: center;">Họ và tên</th>
+                            <th scope='col' style="text-align: center;">Năm sinh</th>
+                            <th scope='col' style="text-align: center;">Lớp</th>
+                            <th scope='col' style="text-align: center;">Tháng</th>
+                            <th scope='col' style="text-align: center;">Học phí</th>
+                            <th scope='col' style="text-align: center;">Tiền quỹ</th>
+                            <th scope='col' style="text-align: center;">Tiền CSVC</th>
+                            <th scope='col' style="text-align: center;">Thu khác</th>
+                            <th scope='col' style="text-align: center;">Tổng tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let item of receiptDetail; let i = index">
+                        <tr>
+                            <th scope='row' style="text-align: center;">{{i+1}}</th>
+                            <td>{{item.collectionDate | date:'dd/MM/yyyy'}}</td>
+                            <td style="text-align: center;">{{item.learnerName}}</td>
+                            <td style="text-align: center;">{{item.learnerBirthday | date:'yyyy'}}</td>
+                            <td style="text-align: center;">{{item.languageClassName}}</td>
+                            <td style="text-align: center;">{{item.month}}</td>
+                            <td style="text-align: center;">{{item.tuition}}</td>
+                            <td style="text-align: center;">{{item.fundMoney}}</td>
+                            <td style="text-align: center;">{{item.infrastructureMoney}}</td>
+                            <td style="text-align: center;">{{item.otherMoney}}</td>
+                            <td style="text-align: center;">{{item.totalMoney}}</td>
+                        </tr>                       
+                    </tbody>
+                    <tfoot style="font-weight: bold;">
+                        <tr>
+                            <th scope='row' style="text-align: center;">#</th>
+                            <td style="font-size: 16px; font-weight: bold;">Tổng tiền:</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="font-size: 16px; font-weight: bold; text-align: center;">{{totalTuition}}</td>
+                            <td style="font-size: 16px; font-weight: bold; text-align: center;">{{totalFunMoney}}</td>
+                            <td style="font-size: 16px; font-weight: bold; text-align: center;">{{totalInfrastructureMoney}}</td>
+                            <td style="font-size: 16px; font-weight: bold; text-align: center;">{{totalOtherMoney}}</td>
+                            <td style="font-size: 16px; font-weight: bold; text-align: center;">{{totalTotal}}</td>
+
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <br><br><br>
+            <div style='width: 100%; float: right;'>
+                <div style='width: 30%;float: right; text-align: center;'><b>Người Lập</b><br><i>(Ký và ghi rõ họ
+                        tên)</i></div>
+            </div>
+        </div>
+    </mat-card>
+</div>

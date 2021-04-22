@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>Chọn lớp học</h1>
+<div mat-dialog-content>
+  <div class="row">
+    <div class="col-12 col-sm-6 col-md-4" *ngFor="let item of classes">
+      <div class="info-box mb-3">
+        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+        <div class="info-box-content">
+          <span class="info-box-text"><b> {{ item.nameOfClass }}</b></span>
+          <span class="info-box-text">Giảng viên: {{ item.nameOfLecturer }}</span>
+          <span class="info-box-text">Số lượng: {{ item.quantity }} học viên</span>
+          <span class="info-box-text">
+            <button mat-icon-button style="float: right;" (click)="chooseClass()">
+              <mat-icon>send</mat-icon>
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- fix for small devices only -->
+    <div class="clearfix hidden-md-up"></div>
+  </div>
+</div>

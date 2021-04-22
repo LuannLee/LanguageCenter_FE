@@ -1,0 +1,150 @@
+<div class="container-fluid">
+    <mat-card>
+        <mat-card-header class="card-container">
+            <mat-card-title style="font-size: 24px;"><b>Báo cáo chấm công nhân viên</b></mat-card-title>
+        </mat-card-header>
+        <div class="row">
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Chọn tháng</mat-label>
+                    <mat-select [(ngModel)]="monthSelectedId">
+                        <mat-option *ngFor="let item of months" value="{{item}}">
+                            {{item}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Chọn năm</mat-label>
+                    <mat-select [(ngModel)]="yearSelectedId">
+                        <mat-option *ngFor="let item of years" value="{{item}}">
+                            {{item}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-6">
+                <button ngxPrint  [useExistingCss]="true" printSectionId="testprint" mat-raised-button color="primary" tabindex="-1"
+                    style="float: right; margin-right: 20px">
+                    <mat-icon>print</mat-icon>
+                    In báo cáo
+                </button>
+
+                <button (click)="hienthi()" mat-raised-button color="primary" tabindex="-1"
+                    style="float: right; margin-right: 20px">
+                    <mat-icon>pageview
+                    </mat-icon>
+                    Hiển thị
+                </button>
+
+            </div>
+        </div>
+    </mat-card>
+</div>
+<div class="container-fluid" *ngIf="checkview">
+    <mat-card style="margin-top: 5px; margin-bottom: 10px;" id="testprint">
+        <div style='width: 150%; float: left;'>
+            <div style='width: 50%;float: left;'>
+                <div style='width: 100%;float: left; text-align: center '>
+                    Trung Tâm Ngoại Ngữ I-English
+                </div>
+                <div style='width: 100%;float: left;  text-align: center'>
+                    ĐC: Cerella Villa, No 33, Plot 11B, Lê Hồng Phong, Đằng Hải, Hải An, Hải Phòng
+                </div>
+            </div>
+            <div style='width: 50%;float: right; text-align: center;'>
+            </div>
+        </div>
+        <br><br><br>
+        <div style=' width: 100%; text-align: center; margin-bottom: 30px; margin-top: 30px;'>
+            <h2>BẢNG CHẤM CÔNG NHÂN VIÊN</h2>
+            <p style="font-size: 16px;">(Bảng chấm công tháng {{this.monthSelectedId}} năm {{this.yearSelectedId}})</p>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <table id="tableTimesheet">
+                    <tr>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2%;">STT</th>
+                        <th scope='col' style="text-align: center; width: 10%; vertical-align:top;">Họ và tên</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">1</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">2</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">3</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">4</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">5</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">6</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">7</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">8</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">9</th>
+                        <th scope='col' style="vertical-align:top; text-align: center; width: 2.3%;">10</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">11</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">12</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">13</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">14</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">15</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">16</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">17</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">18</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">19</th>
+                        <th scope='col' style="vertical-align:top; text-align: center; width: 2.3%;">20</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">21</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">22</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">23</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">24</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">25</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">26</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">27</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">28</th>
+                        <th scope='col' style="text-align: center; vertical-align:top; width: 2.3%;">29</th>
+                        <th scope='col' style="vertical-align:top; text-align: center; width: 2.3%;">30</th>
+                        <th scope='col' style="vertical-align:top; text-align: center; width: 2.3%;">31</th>
+                        <th scope='col' style="vertical-align:top; text-align: center; width: 7%;">Tổng công</th>
+                    </tr>
+                    <tr style="font-size: 15px;" *ngFor="let item of timeSheet; let i = index">
+                        <th style="text-align: center;">{{i+1}}</th>
+                        <td style="padding-left: 10px;">{{item.personnelName}}</td>
+                        <td style="text-align: center;">{{item.day_1}}</td>
+                        <td style="text-align: center;">{{item.day_2}}</td>
+                        <td style="text-align: center;">{{item.day_3}}</td>
+                        <td style="text-align: center;">{{item.day_4}}</td>
+                        <td style="text-align: center;">{{item.day_5}}</td>
+                        <td style="text-align: center;">{{item.day_6}}</td>
+                        <td style="text-align: center;">{{item.day_7}}</td>
+                        <td style="text-align: center;">{{item.day_8}}</td>
+                        <td style="text-align: center;">{{item.day_9}}</td>
+                        <td style="text-align: center;">{{item.day_10}}</td>
+                        <td style="text-align: center;">{{item.day_11}}</td>
+                        <td style="text-align: center;">{{item.day_12}}</td>
+                        <td style="text-align: center;">{{item.day_13}}</td>
+                        <td style="text-align: center;">{{item.day_14}}</td>
+                        <td style="text-align: center;">{{item.day_15}}</td>
+                        <td style="text-align: center;">{{item.day_16}}</td>
+                        <td style="text-align: center;">{{item.day_17}}</td>
+                        <td style="text-align: center;">{{item.day_18}}</td>
+                        <td style="text-align: center;">{{item.day_19}}</td>
+                        <td style="text-align: center;">{{item.day_20}}</td>
+                        <td style="text-align: center;">{{item.day_21}}</td>
+                        <td style="text-align: center;">{{item.day_22}}</td>
+                        <td style="text-align: center;">{{item.day_23}}</td>
+                        <td style="text-align: center;">{{item.day_24}}</td>
+                        <td style="text-align: center;">{{item.day_25}}</td>
+                        <td style="text-align: center;">{{item.day_26}}</td>
+                        <td style="text-align: center;">{{item.day_27}}</td>
+                        <td style="text-align: center;">{{item.day_28}}</td>
+                        <td style="text-align: center;">{{item.day_29}}</td>
+                        <td style="text-align: center;">{{item.day_30}}</td>
+                        <td style="text-align: center;">{{item.day_31}}</td>
+                        <td style="text-align: center;">{{item.totalWorkday}}</td>
+                    </tr>
+                </table>
+
+            </div>
+            <div style='width: 100%; float: right;margin-top: 50px;'>
+                <div style='width: 30%;float: right; text-align: center;'><b>Người lập</b><br><i>(Ký và ghi rõ họ
+                        tên)</i></div>
+            </div>
+        </div>
+    </mat-card>
+</div>

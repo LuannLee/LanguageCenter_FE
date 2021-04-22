@@ -1,0 +1,38 @@
+mat-form-field {
+    width: 100%;
+  }
+  
+  table {
+    text-align: center !important;
+    width: 100%;
+  }
+  
+  .mat-header-cell {
+    text-align: center;
+  }
+  
+  .mat-header-cell {
+    font-size: 16px;
+    font: bold;
+  }
+
+  .example-tab-icon {
+    margin-right: 8px;
+  }
+
+  .tencot {
+    background-color:#2466B0;
+    color: white;
+  }
+
+
+table.table-style-three tr:hover td {
+  cursor: pointer;
+}
+table.table-style-three tr:nth-child(even) td{
+  background-color: #DAE7F7;
+}
+
+.canle {
+  margin-top: 10px;
+}

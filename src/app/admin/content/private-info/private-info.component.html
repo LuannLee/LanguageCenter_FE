@@ -1,0 +1,96 @@
+
+<!-- Main content -->
+<section class="content" style="margin-top: 1%">
+    <div class="container-fluid">
+
+        <mat-card>
+            <mat-card-header class="card-container">
+                <mat-card-title>Thông tin cá nhân</mat-card-title>
+            </mat-card-header>
+
+            <div class=" row col-md-12">
+                <div class="col-md-1"></div>
+                <div class="col-md-6">
+                    <div class="col-md-10">
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b>Họ tên :</b> <a class="float-right"> {{user.fullName}}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Ngày sinh :</b> <a class="float-right"> {{user.birthDay | date: 'dd-MM-yyyy'}}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Số điện thoại :</b> <a class="float-right"> {{user.phoneNumber}}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Email :</b> <a class="float-right"> {{user.email}}</a>
+                            </li>
+
+                            <li class="list-group-item">
+                                <b>UserName :</b> <a class="float-right"> {{user.userName}}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Password :</b> <a class="float-right"> **************</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Tình trạng :</b> <a class="float-right"
+                                    [class]="(user.status == true?'badge badge-success float-right':'badge badge-danger float-right')">
+                                    {{(user.status == true)?'Hoạt động':'Khóa'}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--Chỗ này chèn ảnh-->
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <img style="border-radius:50%;" [(src)]="user.avatar" alt="User profile picture"
+                            [width]="getImageWidth()" [height]="getImageHeigth()">
+                    </div>
+                </div>
+            </div>
+
+        </mat-card>
+
+        <mat-card style="margin-top: 0.5%;">
+            <mat-accordion>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title style="font-size: 18x; padding-top: 10px;">
+                            <b>Đổi mật khẩu</b>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p></p>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Old Password</mat-label>
+                                <input matInput placeholder="Old Password">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>New Password</mat-label>
+                                <input type="password" matInput placeholder="New Password" [(ngModel)]="password">
+
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Confirm Password</mat-label>
+                                <input type="password" matInput placeholder="Confirm Password" [(ngModel)]="confirmPassword">
+                            </mat-form-field>
+
+
+
+                            <button class="addAndSearch" mat-raised-button color="primary" tabindex="-1"
+                                style="float: left;" (click)="DoiMatKhau()">
+                                <mat-icon>vpn_key</mat-icon>
+                                Đổi mật khẩu
+                            </button>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-card>
+    </div>
+</section>
+<!-- /.content -->

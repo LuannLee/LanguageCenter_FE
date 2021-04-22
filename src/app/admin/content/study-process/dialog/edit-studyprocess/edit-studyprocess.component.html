@@ -1,0 +1,85 @@
+<h1 mat-dialog-title>Cập nhật thông tin</h1>
+<form novalidate [formGroup]="editFormGroup" (ngSubmit)="updateStudyProcess()">
+    <div mat-dialog-content>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12" id="khungvien">
+                    <div id="row1">
+                        <mat-label><b>Họ tên :</b>
+                            {{data._learnerInClass.learner.firstName + " " + data._learnerInClass.learner.lastName}}
+                        </mat-label>
+                    </div>
+                    <div id="row1">
+                        <mat-label><b>Mã HV :</b> {{data._learnerInClass.learner.cardId}} </mat-label>
+                    </div>
+                    <div id="row1">
+                        <mat-label><b>Giới tính :</b> {{(data._learnerInClass.learner.sex == true)?"Nam":"Nữ"}}
+                        </mat-label>
+                    </div>
+                    <div id="row1">
+                        <mat-label><b>Ngày sinh :</b> {{this.format.ngaysinh}} </mat-label>
+                    </div>
+                </div>
+
+                <div class="col-md-12" id="khungvien" style="margin-top: 10px; padding-top: 10px;">
+                    <div class="row">
+
+                        <div style="float: left;">
+                            <mat-form-field appearance="outline">
+                                <input [(ngModel)]="learnerInClass.inDate" formControlName="inDate" required [matDatepicker]="picker1" matInput
+                                    placeholder="Ngày vào lớp">
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div style="float: left; margin-left: 20px;">
+                            <mat-form-field appearance="outline">
+                                <input [(ngModel)]="learnerInClass.outDate" [matDatepicker]="picker2" matInput
+                                    placeholder="Chọn ngày nghỉ">
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div style="float: left;">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Chọn trạng thái</mat-label>
+                                <mat-select [(ngModel)]="learnerInClass.status" formControlName="status" required>
+                                    <mat-option *ngFor="let s of status1" value="{{s.code}}">
+                                        {{s.Name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-12" id="khungvien" style="margin-top: 10px; padding-top: 10px;">
+                <div class="col-md-11" id="row1">
+                    <div>
+                        <mat-label><b>Ghi chú :</b></mat-label>
+                        <textarea [(ngModel)]="learnerInClass.note" matInput cdkTextareaAutosize cdkAutosizeMinRows="1"
+                            cdkAutosizeMaxRows="3" style="border: solid 1px blue;"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <mat-dialog-actions align="end">
+        <button type="submit" mat-raised-button color="primary" tabindex="-1" >
+            <mat-icon>check</mat-icon>
+            Lưu
+        </button>
+        <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">
+            <mat-icon>cancel</mat-icon>
+            Hủy
+        </button>
+    </mat-dialog-actions>
+</form>

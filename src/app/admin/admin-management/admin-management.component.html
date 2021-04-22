@@ -1,0 +1,422 @@
+<body class="hold-transition sidebar-mini">
+  <!-- Site wrapper -->
+  <div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+
+        <li class="nav-item">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item routerLink="private-info" routerLinkActive="active">
+              <mat-icon>assignment_ind</mat-icon>
+              <span>Thông tin cá nhân</span>
+            </button>
+            <button mat-menu-item (click)="logout()">
+              <mat-icon>subdirectory_arrow_right</mat-icon>
+              <span>Đăng xuất</span>
+            </button>
+          </mat-menu>
+        </li>
+
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="../../index3.html" class="brand-link">
+        <!-- <img src="../../../assets/admin/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
+          class="brand-image img-circle elevation-3" style="opacity: .8"> -->
+        <span class="brand-text font-weight-light">Trung tâm I-English</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <!-- <div class="image">
+            <img [src]="avatar" class="img-circle elevation-2" alt="User Image">
+          </div> -->
+          <!-- <div class="info">
+            <a href="#" class="d-block">Trang chủ</a>
+          </div> -->
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="flex-column nav nav-pills nav-sidebar" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+            <!-- <li class="nav-item">
+              <a routerLink="dashboard" routerLinkActive="active" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Trang chủ
+                </p>
+              </a>
+            </li> -->
+            <li class="nav-item">
+              <a routerLink="class-list" routerLinkActive="active" class="nav-link" *ngIf="permissionsOfUser[0].Value">
+                <!-- <i class="nav-icon fas fa-th"></i> -->
+                <p>
+                  Danh sách lớp
+                  <!-- <span class="right badge badge-danger">New</span> -->
+                </p>
+              </a>
+            </li>
+            <li class="nav-item has-treeview">
+              <a class="nav-link">
+                <!-- <i class="nav-icon fas fa-cogs"></i> -->
+                <p>
+                  Quản lý chung
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a routerLink="language-classes" routerLinkActive="active" class="nav-link"
+                    *ngIf="permissionsOfUser[2].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Lớp học</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="classroom" routerLinkActive="active" class="nav-link"
+                    *ngIf="permissionsOfUser[3].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Phòng học</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="guest-type" routerLinkActive="active" class="nav-link"
+                    *ngIf="permissionsOfUser[4].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Đối tượng</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="course" routerLinkActive="active" class="nav-link" *ngIf="permissionsOfUser[5].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Khóa học</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="receipt-type" routerLinkActive="active" class="nav-link"
+                    *ngIf="permissionsOfUser[6].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Loại phiếu thu</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="pay-slip-type" routerLinkActive="active" class="nav-link"
+                    *ngIf="permissionsOfUser[7].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Loại phiếu chi</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+            <li class="nav-item has-treeview">
+              <a class="nav-link">
+                <!-- <i class="nav-icon fas fa-graduation-cap"></i> -->
+                <p>
+                  Quản lý học tập
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a routerLink="schedule-table" routerLinkActive="active" class="nav-link"
+                    *ngIf="permissionsOfUser[9].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Xếp lịch học</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="periodic-points" routerLinkActive="active" class="nav-link"
+                    *ngIf="permissionsOfUser[10].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Quản lý điểm định kỳ</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="ending-points" routerLinkActive="active" class="nav-link"
+                    *ngIf="permissionsOfUser[11].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Quản lý điểm cuối khóa</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+            <li class="nav-item has-treeview">
+              <a class="nav-link">
+                <!-- <i class="nav-icon fas fa-balance-scale-left"></i> -->
+                <p>
+                  Quản lý Học viên
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a routerLink="statisc-learner" routerLinkActive="active" class="nav-link"
+                    *ngIf="permissionsOfUser[13].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Học viên</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="add-learner" routerLinkActive="active" class="nav-link"
+                    *ngIf="permissionsOfUser[14].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Thêm mới học viên</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="attendance-sheet" routerLinkActive="active" class="nav-link"
+                    *ngIf="permissionsOfUser[15].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Điểm danh</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="add-learner-class" routerLinkActive="active" class="nav-link"
+                    *ngIf="permissionsOfUser[16].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Xếp lớp</p>
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a routerLink="study-process" routerLinkActive="active" class="nav-link"
+                    *ngIf="permissionsOfUser[17].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Quá trình học tập</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+
+            <li class="nav-item has-treeview">
+              <a class="nav-link">
+                <!-- <i class="fas fa-id-card-alt nav-icon"></i> -->
+                <p>
+                  Quản lý nhân sự
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a routerLink="lecturer" routerLinkActive="active" class="nav-link"
+                    *ngIf="permissionsOfUser[19].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Giáo viên</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="personnels" routerLinkActive="active" class="nav-link"
+                    *ngIf="permissionsOfUser[20].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Nhân viên</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="time-sheet" routerLinkActive="active" class="nav-link"
+                    *ngIf="permissionsOfUser[21].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Chấm công nhân viên</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="roll-pay" routerLinkActive="active" class="nav-link"
+                    *ngIf="permissionsOfUser[22].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Tính lương</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+            <li class="nav-item has-treeview">
+              <a class="nav-link">
+                <!-- <i class="nav-icon fas fa-balance-scale-left"></i> -->
+                <p>
+                  Quản lý thu chi
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a routerLink="receipt" routerLinkActive="active" class="nav-link"
+                    *ngIf="permissionsOfUser[24].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Phiếu thu</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="pay-slip" routerLinkActive="active" class="nav-link"
+                    *ngIf="permissionsOfUser[25].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Phiếu chi</p>
+                  </a>
+                </li>
+
+              </ul>
+            </li>
+
+
+            <li class="nav-item has-treeview">
+              <a class="nav-link">
+                <!-- <i class="nav-icon fas fa-chart-pie"></i> -->
+                <p>
+                  Báo cáo, thống kê
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="report-timesheet-personnels" *ngIf="permissionsOfUser[27].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Báo cáo chấm công</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="report-timesheet-lecturers" *ngIf="permissionsOfUser[27].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Báo cáo chấm công GV</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="report-rollpay-lecturers" *ngIf="permissionsOfUser[27].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Báo cáo lương GV</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="report-rollpay-personnels" *ngIf="permissionsOfUser[27].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Báo cáo lương NV</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="report-ending" class="nav-link" *ngIf="permissionsOfUser[28].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Báo cáo điểm cuối khóa</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="report-periodic" class="nav-link" *ngIf="permissionsOfUser[29].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Báo cáo điểm định kì</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="report-tuition" class="nav-link" *ngIf="permissionsOfUser[30].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Báo cáo thu học phí</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="report-payslips" *ngIf="permissionsOfUser[27].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Báo cáo chi</p>
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="report-attendance-sheet" *ngIf="permissionsOfUser[31].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Báo cáo điểm danh</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="report-listlearner-class" *ngIf="permissionsOfUser[32].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Báo cáo danh sách lớp</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="report-not-tuition" *ngIf="permissionsOfUser[33].Value">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Báo cáo chưa đóng phí</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+
+
+            <li class="nav-header" *ngIf="checkAdmin()">Khung quản trị viên</li>
+            <li class="nav-item">
+              <a routerLink="user" routerLinkActive="active" class="nav-link" *ngIf="checkAdmin()">
+                <i class="nav-icon fas fa-user-tie"></i>
+                <p>Quản lý người dùng</p>
+              </a>
+            </li>
+
+          </ul>
+        </nav>
+      </div>
+    </aside>
+
+
+    <div class="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+
+
+
+    <footer class="main-footer">
+      <div class="float-right d-none d-sm-block">
+        <!-- <b>Version</b> 3.0.0-beta.2 -->
+      </div>
+      <!-- <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
+      reserved. -->
+    </footer>
+
+
+  </div>
+
+
+
+  <script src="../../../assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- ChartJS -->
+  <script src="../../../assets/admin/plugins/chart.js/Chart.min.js"></script>
+  <!-- Sparkline -->
+  <script src="../../../assets/admin/plugins/sparklines/sparkline.js"></script>
+  <!-- JQVMap -->
+  <script src="../../../assets/admin/plugins/jqvmap/jquery.vmap.min.js"></script>
+  <script src="../../../assets/admin/plugins/jqvmap/maps/jquery.vmap.world.js"></script>
+  <!-- jQuery Knob Chart -->
+  <script src="../../../assets/admin/plugins/jquery-knob/jquery.knob.min.js"></script>
+  <!-- daterangepicker -->
+  <script src="../../../assets/admin/plugins/moment/moment.min.js"></script>
+  <script src="../../../assets/admin/plugins/daterangepicker/daterangepicker.js"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="../../../assets/admin/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  <!-- Summernote -->
+  <script src="../../../assets/admin/plugins/summernote/summernote-bs4.min.js"></script>
+  <!-- overlayScrollbars -->
+  <script src="../../../assets/admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- FastClick -->
+  <script src="../../../assets/admin/plugins/fastclick/fastclick.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../../../assets/admin/dist/js/adminlte.js"></script>
+  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+  <script src="../../../assets/admin/dist/js/pages/dashboard.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="../../../assets/admin/dist/js/demo.js"></script>
+</body>

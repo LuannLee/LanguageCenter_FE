@@ -1,0 +1,142 @@
+<section class="content">
+    <!-- Header Content -->
+    <div class="container-fluid">
+        <mat-card>
+            <!-- Header -->
+            <mat-card-header class="card-container">
+                <mat-card-title style="font-size: 24px;"><b>Lớp học</b></mat-card-title>
+                <mat-card-subtitle style="font-size: 18px;">Danh sách lớp học</mat-card-subtitle>
+            </mat-card-header>
+            <!-- Content -->
+            <div class="row">
+                <!-- Text tìm kiếm tổng hợp -->
+                <div class="col-md-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Thông tin tìm kiếm</mat-label>
+                        <input matInput [(ngModel)]="keyWord">
+                        <mat-hint>nhập thông tin tìm kiếm: ...</mat-hint>
+                    </mat-form-field>
+                </div>
+                <!-- Chọn khóa học  -->
+                <div class="col-md-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Chọn khóa học</mat-label>
+                        <mat-select [(ngModel)]="courseKeyword">
+                            <mat-option *ngFor="let s of courseList" value="{{s.id}}">
+                                {{s.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <!-- Chọn trạng thái -->
+                <div class="col-md-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Chọn trạng thái</mat-label>
+                        <mat-select [(ngModel)]="statusSelected">
+                            <mat-option *ngFor="let s of status" value="{{s.code}}">
+                                {{s.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <!-- Tìm kiếm -->
+                <div class="col-md-5">
+                    <button class="addAndSearch" mat-raised-button color="primary" tabindex="-1"
+                        style="float: right; margin-right: 20px" (click)="findClass()">
+                        <mat-icon>search</mat-icon>
+                        Tìm kiếm
+                    </button>
+                </div>
+
+            </div>
+        </mat-card>
+    </div>
+
+
+    <!-- Content -->
+    <div class="container-fluid">
+        <mat-card>
+            <div class="row d-flex align-items-stretch">
+                <!-- Vòng lặp -->
+                <div class="col-12 col-sm-6 col-md-3 d-flex align-items-stretch" *ngFor="let item of classes">
+                    <!-- Profile Image -->
+                    <div class="card card-primary card-outline">
+
+                        <div class="card-body box-profile">
+                            <div
+                                style="background-color: #f54278; height: 165px; padding-top: 10px; border-radius: 5px;">
+                                <h3 class="profile-username text-center" style="color: white;"> <b>{{item.name}} </b>
+                                </h3>
+                            </div>
+                        </div>
+
+                        <div class="card-body box-profile" style="margin-top: -155px;">
+                            <!-- <div class="text-center">
+                                <img style="border-radius:50%;" [(src)]="image" alt="User profile picture"
+                                    [width]="getImageWidth()" [height]="getImageHeigth()">
+                            </div> -->
+
+                            <p></p>
+
+                            <ul class="list-group list-group-unbordered mb-3">
+                                <li class="list-group-item">
+                                    <b>Khóa học</b> <a class="float-right"> {{item.courseName}}</a>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Ngày bắt đầu</b> <a class="float-right">
+                                        {{item.startDay | date:'dd-MM-yyyy'}}</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Ngày kết thúc</b> <a class="float-right"> {{item.endDay | date:'dd-MM-yyyy'}}</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Học phí</b> <a class="float-right"> {{item.courseFee | currency:'VND':''}}
+                                        VNĐ</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Sĩ số</b> <a class="float-right"> {{item.maxNumber}}</a>
+                                </li>
+                                <li class="list-group-item"><b>Trạng thái</b>
+                                    <a class="float-right" style="font-size: 20px;">
+                                        <a
+                                            [class]="(item.status == 1?'badge badge-success':(item.status == 0?'badge badge-danger':'badge badge-primary'))">
+                                            {{(item.status)==1?"Hoạt động":((item.status)==0?"Kết thúc":"Đã đầy")}}
+                                        </a>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="card-body box-profile" style="background-color: lightgrey;">
+                            <div class=" row col-md-11" style="margin-left: 4%;">
+                                <button class="btn btn-sm bg-primary col-md-12" style="font-size: 17px;"
+                                    (click)="ClassId(item.id)">
+                                    <i class="fas fa-list"></i> <b> Danh sách lớp</b>
+                                </button>
+                            </div>
+
+                            <div class=" row col-md-12" style="margin-top: 10px; margin-left: 4%;">
+                                <button class="col-md-6 btn btn-sm"
+                                    style="width:100% ; background-color: green; color: white;">
+                                    <i class="fas fa-edit"></i> Điểm danh
+                                </button>
+
+                                <button class="col-md-5 btn btn-sm bg-danger" style="width:100%; float: right;">
+                                    <i class="fas fa-edit"></i> Điểm
+                                </button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+
+            </div>
+        </mat-card>
+    </div>
+
+
+
+</section>

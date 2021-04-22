@@ -1,0 +1,599 @@
+<div class="container-fluid">
+  <mat-card class="head-column">
+    <mat-card-content>
+      <div class="row">
+        <div class="col-md-4">
+          <img mat-card-sm-image src="../../../../assets/admin/dist/img/credit/money.png">
+        </div>
+        <div class="col-md-7">
+          <div class="row">
+            <div class="col-md-12">
+              <h3>Bảng lương</h3>
+            </div>
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-6">Tổng lương</div>
+                <div class="col-md-6" style="text-align: right;">
+                  {{overviewRollPay.totalMoneyPersonelNotPaid + overviewRollPay.totalMoneyPersonelPaid + overviewRollPay.totalMoneyLecturePaid + overviewRollPay.totalMoneyLectureNotPaid | currency:'JPY':''}}
+                  VNĐ
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">Đã xét duyệt</div>
+                <div class="col-md-6" style="text-align: right;">
+                  {{ overviewRollPay.totalMoneyPersonelPaid + overviewRollPay.totalMoneyLecturePaid | currency:'JPY':''}}
+                  VNĐ
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">Chưa Xét duyệt</div>
+                <div class="col-md-6" style="text-align: right;">
+                  {{ overviewRollPay.totalMoneyPersonelNotPaid + overviewRollPay.totalMoneyLectureNotPaid | currency:'JPY':''}}
+                  VNĐ
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ribbon-wrapper ribbon-sm">
+          <div class="ribbon bg-secondary" style="font-size: 10px;">
+            Tháng {{monthSearch}}
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="head-column">
+    <mat-card-content>
+      <div class="row">
+        <div class="col-md-4">
+          <img mat-card-sm-image src="../../../../assets/admin/dist/img/staff/salesman.png">
+        </div>
+        <div class="col-md-7">
+          <div class="row">
+            <div class="col-md-12">
+              <h3>Tổng số nhân viên</h3>
+            </div>
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-6">Tổng nhân viên</div>
+                <div class="col-md-6">
+                  {{overviewRollPay.totalOfStaffsPaid + overviewRollPay.totalOfStaffsNotPaid }} người
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">Đã xét duyệt</div>
+                <div class="col-md-6">
+                  {{ overviewRollPay.totalOfStaffsPaid }} người
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">Chưa Xét duyệt</div>
+                <div class="col-md-6">
+                  {{ overviewRollPay.totalOfStaffsNotPaid }} người
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ribbon-wrapper ribbon-sm">
+          <div class="ribbon bg-secondary" style="font-size: 10px;">
+            Tháng {{monthSearch}}
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="head-column">
+    <mat-card-content>
+      <div class="row">
+        <div class="col-md-4">
+          <img mat-card-sm-image src="../../../../assets/admin/dist/img/teacher/teacher.png">
+        </div>
+        <div class="col-md-7">
+          <div class="row">
+            <div class="col-md-12">
+              <h3>Tổng số giáo viên</h3>
+            </div>
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-6">Tổng giáo viên</div>
+                <div class="col-md-6">
+                  {{overviewRollPay.totalOfLecturersPaid + overviewRollPay.totalOfLecturersNotPaid }}người
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">Đã xét duyệt</div>
+                <div class="col-md-6">
+                  {{ overviewRollPay.totalOfLecturersPaid }} người
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">Chưa Xét duyệt</div>
+                <div class="col-md-6">
+                  {{ overviewRollPay.totalOfLecturersNotPaid }} người
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ribbon-wrapper ribbon-sm">
+          <div class="ribbon bg-secondary" style="font-size: 10px;">
+            Tháng {{monthSearch}}
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+
+  <!--Button xxxx-->
+  <div class="row col-md-12">
+    <div class="col-md-1">
+      <button mat-raised-button color="primary" tabindex="-1" style=" margin-right: 10px" (click)="ClickDaXetDuyet()">
+        Bảng lương
+      </button>
+    </div>
+
+    <div class="col-md-1">
+      <button mat-raised-button color="warn" tabindex="-1" (click)="ClickChuaXetDuyet()">
+        Xét duyệt lương
+      </button>
+    </div>
+
+    <div class="col-md-6"></div>
+
+    <mat-form-field class="col-md-1">
+      <mat-label>Tháng</mat-label>
+      <mat-select [(ngModel)]="monthSearch" required>
+        <mat-option *ngFor="let month of months" value="{{month}}">
+          {{month}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="col-md-1">
+      <mat-label>Năm</mat-label>
+      <mat-select [(ngModel)]="yearSearch">
+        <mat-option *ngFor="let year of years" value="{{year}}">
+          {{year}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="col-md-2">
+      <button mat-raised-button color="primary" tabindex="-1" style="float: right" (click)="TimKiem()">
+        Tìm kiếm
+      </button>
+    </div>
+
+  </div>
+
+  <!--Bảng lương-->
+  <div class="body-row" *ngIf="isBangLuong">
+    <mat-tab-group style="background-color: lightblue;">
+      <mat-tab label="Nhân viên">
+        <mat-card>
+          <div class="row">
+            <div class="col-md-12" style="text-align: center; margin-top: 20px;">
+              <span style="text-align: center; font-size: 24px;">
+                <b> Bảng lương nhân viên {{monthSearch}}/{{yearSearch}} </b>
+              </span>
+            </div>
+          </div>
+
+          <!-- Bảng lương NV - đc sửa-->
+          <div class="row" style="margin-bottom: 20px; margin-top: 40px;">
+            <div class="col-md-2" style="padding-left: 20px;">
+              <button mat-raised-button color="primary" tabindex="-1" style="float: left;" (click)="XemChamCong()">
+                Xem chấm công
+              </button>
+            </div>
+            <div class="col-md-10" style="text-align: right;">Đơn vị tính : VNĐ</div>
+          </div>
+
+          <table mat-table [dataSource]="BangLuongNhanVienDataSource" matSort class="mat-elevation-z8">
+
+            <ng-container matColumnDef="index">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> STT </th>
+              <td mat-cell *matCellDef="let element; let i=index"> {{i+1}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Họ Tên </th>
+              <td mat-cell *matCellDef="let element">
+                {{element.perSonnel.firstName + " " + element.perSonnel.lastName}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Chức vụ </th>
+              <td mat-cell *matCellDef="let element"> {{element.perSonnel.position}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="salary">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Lương chính </th>
+              <td mat-cell *matCellDef="let element"> {{element.salary.totalBasicSalary | currency:'JPY':''}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="allowance">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Phụ cấp </th>
+              <td mat-cell *matCellDef="let element"> {{element.salary.totalAllowance | currency:'JPY':''}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="bonus">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Thưởng </th>
+              <td mat-cell *matCellDef="let element"> {{element.salary.totalBonus | currency:'JPY':''}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="insurancePremiums">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Tiền bảo hiểm </th>
+              <td mat-cell *matCellDef="let element"> {{element.salary.totalInsurancePremium | currency:'JPY':''}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalWorkdays">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Ngày công </th>
+              <td mat-cell *matCellDef="let element"> {{element.salary.totalWorkdays}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalSalary">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Tổng lương </th>
+              <td mat-cell *matCellDef="let element"> {{element.salary.totalTheoreticalAmount | currency:'JPY':''}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="advancePayment">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Tạm ứng</th>
+              <td mat-cell *matCellDef="let element"> {{element.salary.totalAdvancePayment | currency:'JPY':''}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalActualSalary">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Thực nhận</th>
+              <td mat-cell *matCellDef="let element"> {{element.salary.totalRealityAmount | currency:'JPY':''}}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="BangLuongNhanVienColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: BangLuongNhanVienColumns;"></tr>
+          </table>
+        </mat-card>
+
+      </mat-tab>
+
+      <mat-tab label="Giáo viên">
+        <mat-card>
+          <div class="row">
+            <div class="col-md-12" style="text-align: center; margin-top: 20px;">
+              <span style="text-align: center; font-size: 24px;">
+                <b>Bảng lương giáo viên {{monthSearch}}/{{yearSearch}} </b>
+              </span>
+            </div>
+          </div>
+
+          <!-- Bảng lương GV -->
+          <div class="row" style="margin-bottom: 20px; margin-top: 40px;">
+
+            <div class="col-md-10" style="text-align: right;">Đơn vị tính : VNĐ</div>
+          </div>
+
+          <table mat-table [dataSource]="BangLuongGiaoVienDataSource" matSort class="mat-elevation-z8">
+
+            <ng-container matColumnDef="index">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> STT </th>
+              <td mat-cell *matCellDef="let element; let i=index"> {{i+1}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Họ Tên </th>
+              <td mat-cell *matCellDef="let element">
+                {{element.lecturer.firstName + " " + element.lecturer.lastName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="allowance">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Phụ cấp </th>
+              <td mat-cell *matCellDef="let element">
+                {{element.salary.totalAllowance}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="bonus">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Thưởng</th>
+              <td mat-cell *matCellDef="let element"> {{element.salary.totalBonus}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalWorkdays">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Ngày công</th>
+              <td mat-cell *matCellDef="let element"> {{element.salary.totalWorkdays}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalGiangday">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Lương giảng dạy</th>
+              <td mat-cell *matCellDef="let element">
+                {{element.salary.totalTheoreticalAmount - element.salary.totalBonus - element.salary.totalAllowance | currency:'JPY':''}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalSalary">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Tổng lương </th>
+              <td mat-cell *matCellDef="let element">
+                {{element.salary.totalTheoreticalAmount | currency:'JPY':''}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="insurancePremiums">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Tiền bảo hiểm </th>
+              <td mat-cell *matCellDef="let element"> {{element.salary.totalInsurancePremium| currency:'JPY':''}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="advancePayment">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Tạm ứng</th>
+              <td mat-cell *matCellDef="let element"> {{element.salary.totalAdvancePayment | currency:'JPY':''}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalActualSalary">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Thực nhận</th>
+              <td mat-cell *matCellDef="let element"> {{ element.salary.totalRealityAmount | currency:'JPY':''}}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="BangLuongGiaoVienColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: BangLuongGiaoVienColumns;"></tr>
+          </table>
+
+        </mat-card>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+  <!--Bảng xét duyệt lương-->
+  <div class="body-row" *ngIf="!isBangLuong">
+    <mat-tab-group style="background-color: tomato;">
+
+      <mat-tab label="Nhân viên">
+        <mat-card>
+          <div class="row">
+            <div class="col-md-12" style="text-align: center; margin-top: 20px;">
+              <span style="text-align: center; font-size: 24px;">
+                <b>Xét duyệt lương nhân viên {{monthSearch}}/{{yearSearch}} </b>
+              </span>
+            </div>
+          </div>
+
+          <!-- Bảng lương NV - đc sửa-->
+          <div class="row" style="margin-bottom: 20px; margin-top: 40px;">
+            <div class="col-md-2" style="padding-left: 20px;">
+              <button mat-raised-button color="primary" tabindex="-1" style="float: left;" (click)="XemChamCong()">
+                Xem chấm công
+              </button>
+            </div>
+            <div class="col-md-10" style="text-align: right;">Đơn vị tính : VNĐ</div>
+          </div>
+
+          <table mat-table [dataSource]="XetDuyetNhanVienDataSource" matSort class="mat-elevation-z8">
+
+            <ng-container matColumnDef="index">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> STT </th>
+              <td mat-cell *matCellDef="let element; let i=index"> {{i+1}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Họ Tên </th>
+              <td mat-cell *matCellDef="let element">
+                {{element.perSonnel.firstName + " " + element.perSonnel.lastName}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Chức vụ </th>
+              <td mat-cell *matCellDef="let element"> {{element.perSonnel.position}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="salary">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Lương chính </th>
+              <td mat-cell *matCellDef="let element"> {{element.salary.totalBasicSalary | currency:'JPY':''}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="allowance">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot" style="width: 10%;"> Phụ cấp </th>
+              <td mat-cell *matCellDef="let element">
+                <input type="number" style="width: 70%; background-color:#F5F5F5;"
+                  [(ngModel)]="element.salary.totalAllowance" matInput required autocomplete="off"
+                  (change)="updatePeriodicPoint(element.salary.id, element.salary.totalAllowance, element.salary.totalBonus)">
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="bonus">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot" style="width: 10%;"> Thưởng </th>
+              <td mat-cell *matCellDef="let element">
+                <input type="number" style="width: 70%; background-color:#F5F5F5;"
+                  [(ngModel)]="element.salary.totalBonus" matInput required autocomplete="off"
+                  (change)="updatePeriodicPoint(element.salary.id, element.salary.totalAllowance, element.salary.totalBonus)">
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="insurancePremiums">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Tiền bảo hiểm </th>
+              <td mat-cell *matCellDef="let element"> {{element.salary.totalInsurancePremium | currency:'JPY':''}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalWorkdays">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Ngày công </th>
+              <td mat-cell *matCellDef="let element"> {{element.salary.totalWorkdays}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalSalary">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Tổng lương </th>
+              <td mat-cell *matCellDef="let element">
+                {{element.salary.totalTheoreticalAmount | currency:'JPY':''}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="advancePayment">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Tạm ứng</th>
+              <td mat-cell *matCellDef="let element"> {{element.salary.totalAdvancePayment | currency:'JPY':''}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalActualSalary">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Thực nhận</th>
+              <td mat-cell *matCellDef="let element"> {{element.salary.totalRealityAmount | currency:'JPY':''}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="select">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot">
+                <mat-checkbox (change)="$event ? masterToggle() : null"
+                  [checked]="selection.hasValue() && isAllSelected()"
+                  [indeterminate]="selection.hasValue() && !isAllSelected()">
+                </mat-checkbox>
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(element) : null"
+                  [checked]="selection.isSelected(element)">
+                </mat-checkbox>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="XetDuyetNhanVienColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: XetDuyetNhanVienColumns;"></tr>
+          </table>
+
+          <div class="row" style="margin-top: 20px;">
+            <div class="col-md-11">
+              <button mat-raised-button color="primary" tabindex="-1" style="float: right; width: 10%;"
+                (click)="updateSalaryPaied()">
+                Cập nhật
+              </button>
+            </div>
+          </div>
+        </mat-card>
+      </mat-tab>
+
+      <mat-tab label="Giáo viên">
+        <mat-card>
+          <div class="row">
+            <div class="col-md-12" style="text-align: center; margin-top: 20px;">
+              <span style="text-align: center; font-size: 24px;">
+                <b>Xét duyệt lương giáo viên {{monthSearch}}/{{yearSearch}} </b>
+              </span>
+            </div>
+          </div>
+
+          <!-- Bảng lương GV - đc sửa-->
+          <div class="row" style="margin-bottom: 20px; margin-top: 40px;">
+
+            <div class="col-md-10" style="text-align: right;">Đơn vị tính : VNĐ</div>
+          </div>
+
+          <table mat-table [dataSource]="XetDuyetGiaoVienDataSource" matSort class="mat-elevation-z8">
+
+            <ng-container matColumnDef="index">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> STT </th>
+              <td mat-cell *matCellDef="let element; let i=index"> {{i+1}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Họ Tên </th>
+              <td mat-cell *matCellDef="let element">
+                {{element.lecturer.firstName + " " + element.lecturer.lastName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="allowance">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot" style="width: 10%;"> Phụ cấp </th>
+              <td mat-cell *matCellDef="let element">
+                <input type="number" style="width: 70%; background-color:#F5F5F5;"
+                  [(ngModel)]="element.salary.totalAllowance" matInput required autocomplete="off"
+                  (change)="updateLuong(element)">
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="bonus">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot" style="width: 10%;"> Thưởng </th>
+              <td mat-cell *matCellDef="let element">
+                <input type="number" style="width: 70%; background-color:#F5F5F5;"
+                  [(ngModel)]="element.salary.totalBonus" matInput required autocomplete="off"
+                  (change)="updateLuong(element)">
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalWorkdays">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Ngày công</th>
+              <td mat-cell *matCellDef="let element"> {{element.salary.totalWorkdays}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalGiangday">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Lương giảng dạy</th>
+              <td mat-cell *matCellDef="let element"> {{element.salary.totalGiangday}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalSalary">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Tổng lương </th>
+              <td mat-cell *matCellDef="let element">
+                {{element.salary.totalTheoreticalAmount | currency:'JPY':''}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="insurancePremiums">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Tiền bảo hiểm </th>
+              <td mat-cell *matCellDef="let element"> {{element.salary.totalInsurancePremium| currency:'JPY':''}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="advancePayment">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Tạm ứng</th>
+              <td mat-cell *matCellDef="let element"> {{element.salary.totalAdvancePayment | currency:'JPY':''}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalActualSalary">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot"> Thực nhận</th>
+              <td mat-cell *matCellDef="let element"> {{ element.salary.totalRealityAmount | currency:'JPY':''}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="select">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="cot">
+                <mat-checkbox (change)="$event ? masterToggleGV() : null"
+                  [checked]="selectionGV.hasValue() && isAllSelectedGV()"
+                  [indeterminate]="selectionGV.hasValue() && !isAllSelectedGV()">
+                </mat-checkbox>
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selectionGV.toggle(element) : null"
+                  [checked]="selectionGV.isSelected(element)">
+                </mat-checkbox>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="XetDuyetGiaoVienColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: XetDuyetGiaoVienColumns;"></tr>
+          </table>
+
+          <div class="row" style="margin-top: 20px;">
+            <div class="col-md-11">
+              <button mat-raised-button color="primary" tabindex="-1" style="float: right; width: 10%;"
+                (click)="updateLecturePaied()">
+                Cập nhật
+              </button>
+            </div>
+          </div>
+        </mat-card>
+      </mat-tab>
+
+    </mat-tab-group>
+  </div>
+
+</div>

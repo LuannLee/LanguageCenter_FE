@@ -1,0 +1,119 @@
+<h1 mat-dialog-title>Thêm mới phiếu chi</h1>
+<form novalidate [formGroup]="paySlipFormGroup" (ngSubmit)="create_PaySlip()" >
+    <div mat-dialog-content>
+        <div class=" row">
+            <div class="row col-md-12">
+                <div class="col-md-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Loại chi</mat-label>
+                        <mat-select [(ngModel)]="paySlip.paySlipTypeId" formControlName="paySlipTypeId" required
+                            style="text-align: center;">
+                            <mat-option *ngFor="let item of paySlipType" [value]="item.id" style="text-align: center;">
+                                {{item.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nhân viên chi</mat-label>
+                        <mat-select [(ngModel)]="paySlip.personnelId" formControlName="personnelId" required
+                            style="text-align: center;">
+                            <mat-option *ngFor="let item of personnel" [value]="item.id" style="text-align: center;">
+                                {{item.firstName + " " + item.lastName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class=" row col-md-12" *ngIf="paySlip.paySlipTypeId == 1">
+                <div class="col-md-6" style="color: gray;">
+                    <mat-radio-group aria-label="Select an option"> Tạm ứng :
+                        <mat-radio-button value="false" (click)="chinhanvien()">Nhân viên</mat-radio-button>
+                        <mat-radio-button value="true" (click)="chigiaovien()">Giáo viên</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field *ngIf="paySlip.paySlipTypeId == 1 && select == false">
+                        <mat-label>Mã Nhân Viên</mat-label>
+                        <input [(ngModel)]="cardIdPersonnel" formControlName="receivePersonnelId" matInput
+                            placeholder="Nhập mã nhân viên" (keypress)="findNhanVien($event)">
+                    </mat-form-field>
+
+                    <mat-form-field *ngIf="paySlip.paySlipTypeId == 1 && select == true">
+                        <mat-label>Mã Giáo Viên</mat-label>
+                        <input [(ngModel)]="cardIdLecturer" formControlName="receiveLecturerId" matInput
+                            placeholder="Nhập mã giáo viên" (keypress)="findGiaoVien($event)" >
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row col-md-12">
+                <div class="col-md-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Người nhận</mat-label>
+                        <input [(ngModel)]="paySlip.receiver" formControlName="receiver" matInput
+                            placeholder="Nhập người nhận">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tổng tiền</mat-label>
+                        <input type="number" [(ngModel)]="paySlip.total" formControlName="total" matInput
+                            placeholder="Nhập tổng tiền" required class="numberStyle">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row col-md-12">
+                <div class="col-md-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Ngày chi</mat-label>
+                        <input [(ngModel)]="paySlip.date" formControlName="date" [matDatepicker]="picker1" matInput
+                            placeholder="Choose a date of payment" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Trạng thái</mat-label>
+                        <mat-select [(ngModel)]="paySlip.status" formControlName="status" required
+                            style="text-align: center;">
+                            <mat-option *ngFor="let item of status" [value]="item.code" style="text-align: center;">
+                                {{item.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row col-md-12">
+                <div class="col-md-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nội dung chi</mat-label>
+                        <textarea [(ngModel)]="paySlip.content" formControlName="content" matInput
+                            placeholder="Nhập ghi chú" required cdkTextareaAutosize cdkAutosizeMinRows="2"
+                            cdkAutosizeMaxRows="2"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Ghi chú</mat-label>
+                        <textarea [(ngModel)]="paySlip.note" formControlName="note" matInput placeholder="Nhập ghi chú"
+                            cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <mat-dialog-actions align="end">
+        <button type="submit" mat-raised-button color="primary" tabindex="-1" [disabled]="!paySlipFormGroup.valid">
+            <mat-icon>add_circle</mat-icon>
+            Thêm
+        </button>
+        <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">
+            <mat-icon>cancel</mat-icon>
+            Hủy
+        </button>
+    </mat-dialog-actions>
+</form>

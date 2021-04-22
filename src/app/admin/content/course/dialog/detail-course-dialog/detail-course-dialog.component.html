@@ -1,0 +1,53 @@
+<h1 mat-dialog-title>Chi tiết khóa học</h1>
+
+<div mat-dialog-content>
+    <div class="row">
+        <div class="col-md-12">
+            <mat-form-field appearance="outline">
+                <mat-label>Tên khóa học</mat-label>
+                <input [value]="this.data._course.name" matInput placeholder="Nhập tên khóa học" required disabled> 
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Học phí</mat-label>
+                <input [value]="this.data._course.price" matInput placeholder="Nhập giá" required class="numberStyle" disabled>
+            </mat-form-field>
+
+
+            <mat-form-field appearance="outline">
+                <mat-label>Thời gian học</mat-label>
+                <input [value]="this.data._course.traingTime" matInput required class="numberStyle" disabled>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Số lượng buổi học</mat-label>
+                <input [value]="this.data._course.numberOfSession"matInput required class="numberStyle" disabled>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Trạng thái</mat-label>
+                <mat-select [value]="this.data._course.status" required style="text-align: center;" disabled>
+                    <mat-option *ngFor="let item of status" [value]="item.value" style="text-align: center;">
+                        {{item.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Nội dung khóa học</mat-label>
+                <textarea [value]="this.data._course.content" matInput placeholder="Nhập nội dung cho khóa học"
+                    cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" disabled></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Ghi chú</mat-label>
+                <textarea [value]="this.data._course.note" matInput placeholder="Nhập chi chú"
+                cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="3" disabled></textarea>
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">Đóng</button>
+</mat-dialog-actions>

@@ -1,0 +1,58 @@
+<h1 mat-dialog-title>Tạo điểm danh</h1>
+<hr>
+<div mat-dialog-content>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Ngày điểm danh</mat-label>
+    <input [matDatepicker]="picker1" matInput placeholder="Ngày điểm danh" required
+      (dateChange)="changDate($event.value)">
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker #picker1></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Lớp</mat-label>
+    <mat-select [(ngModel)]="attendanceSheet.languageClassId" required style="text-align: center;">
+      <mat-option *ngFor="let item of classes" [value]="item.id" style="text-align: center;">
+        {{item.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="row">
+    <div class="col-md-6">
+      <mat-form-field appearance="outline">
+        <mat-label>Giáo viên</mat-label>
+        <mat-select [(ngModel)]="attendanceSheet.lecturerId" required style="text-align: center;">
+          <mat-option *ngFor="let item of lecturers" [value]="item.id" style="text-align: center;">
+            {{item.firstName + " " + item.lastName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field appearance="outline">
+        <mat-label>Trợ giảng</mat-label>
+        <mat-select [(ngModel)]="attendanceSheet.tutorId" required style="text-align: center;">
+          <mat-option *ngFor="let item of tutors" [value]="item.id" style="text-align: center;">
+            {{item.firstName + " " + item.lastName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+
+
+</div>
+
+<mat-dialog-actions align="end">
+  <button type="button" mat-raised-button color="primary" tabindex="-1" (click)="createAttendance()">
+    <mat-icon>add_circle</mat-icon>
+    Tạo điểm danh
+  </button>
+  <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">
+    <mat-icon>cancel</mat-icon>
+    Hủy
+  </button>
+</mat-dialog-actions>

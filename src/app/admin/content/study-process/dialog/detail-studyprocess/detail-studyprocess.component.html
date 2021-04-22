@@ -1,0 +1,55 @@
+<h1 mat-dialog-title>Thông tin chi tiết</h1>
+
+<div mat-dialog-content>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-5" id="khungvien">
+                <div id="row1">
+                    <mat-label><b>Họ tên :</b>
+                        {{this.data._learnerInClass.learner.firstName + " " + this.data._learnerInClass.learner.lastName}}
+                    </mat-label>
+                </div>
+                <div id="row1">
+                    <mat-label><b>Mã HV :</b> {{this.data._learnerInClass.learner.cardId}} </mat-label>
+                </div>
+                <div id="row1">
+                    <mat-label><b>Giới tính :</b> {{(this.data._learnerInClass.status == true)?"Hoạt động":"Khóa"}}
+                    </mat-label>
+                </div>
+                <div id="row1">
+                    <mat-label><b>Ngày sinh :</b> {{this.format.ngaysinh}} </mat-label>
+                </div>
+            </div>
+
+            <div class="col-md-6" id="khungvien">
+                <div id="row1">
+                    <mat-label><b>Ngày vào lớp :</b> {{this.format.ngayvao}}</mat-label>
+                </div>
+                <div id="row1">
+                    <mat-label><b>Ngày rời lớp :</b> {{this.format.ngayra}}</mat-label>
+                </div>
+                <div id="row1">
+                    <mat-label><b>Trạng thái :</b>
+                        <span
+                            [class]="(this.data._learnerInClass.status == 1?'badge badge-success':'badge badge-danger')">
+                            {{(this.data._learnerInClass.status == 1)?"Hoạt động":"Khóa"}}
+                        </span>
+                    </mat-label>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" style="margin-top: 10px;">
+            <div class="col-md-11" id="row1" id="khungvien">
+                <div>
+                    <mat-label><b>Ghi chú :</b></mat-label>
+                    <textarea [value]="this.data._learnerInClass.note" matInput cdkTextareaAutosize
+                        cdkAutosizeMinRows="1" cdkAutosizeMaxRows="3" disabled></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">Đóng</button>
+</mat-dialog-actions>

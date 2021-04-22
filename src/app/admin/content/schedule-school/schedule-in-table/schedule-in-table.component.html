@@ -1,0 +1,142 @@
+<section class="content" style="margin-top: 1%">
+  <div class="container-fluid">
+    <div style="background-color: white;">
+      <mat-card-header class="card-container">
+        <mat-card-title>Xếp lịch học</mat-card-title>
+        <hr>
+      </mat-card-header>
+
+      <mat-card style="margin-top: 0.5%">
+
+        <div class="row">
+          <div class="col-md-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Lớp học</mat-label>
+              <input matInput placeholder="Tên lớp học" [(ngModel)]="className" />
+              <mat-hint>Tên lớp học muốn tìm kiếm</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Chọn trạng thái</mat-label>
+              <mat-select [(ngModel)]="statusSelected">
+                <mat-option *ngFor="let s of status" value="{{ s.code }}">
+                  {{ s.Name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-md-5"></div>
+          <div class="col-md-1">
+            <button mat-flat-button tabindex="-1" style="float: right; margin-right: 20px"
+              (click)="searchSchedule()">
+              <mat-icon>search</mat-icon>
+           
+            </button>
+          </div>
+        </div>
+        <hr>
+        <mat-card-content>
+          <div class="row">
+            <div class="col-md-12">
+              <mat-chip-list>
+                <mat-chip color="primary" selected (click)="openCreateDialog()" *ngIf="permissionOfFunction.canCreate">
+                  Tạo lịch</mat-chip>
+                <mat-chip color="accent" selected (click)="gotoSchedule()" *ngIf="permissionOfFunction.canUpdate">Xếp
+                  lịch lớp</mat-chip>
+                <mat-chip color="warn" selected (click)="turnOnDelete()" *ngIf="permissionOfFunction.canDelete">Xóa
+                </mat-chip>
+              </mat-chip-list>
+
+            </div>
+          </div>
+          <hr>
+
+
+          <table mat-table [dataSource]="schedulesSource">
+            <ng-container matColumnDef="index">
+              <th mat-header-cell *matHeaderCellDef>STT</th>
+              <td mat-cell *matCellDef="let element; let i = index">
+                {{ i + 1 }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="fromDate">
+              <th mat-header-cell *matHeaderCellDef>Từ ngày</th>
+              <td mat-cell *matCellDef="let element">{{ element.fromDate | date : 'dd-MM-yyyy' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="toDate">
+              <th mat-header-cell *matHeaderCellDef>Đến ngày</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.toDate  | date : 'dd-MM-yyyy'}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="daysOfWeek">
+              <th mat-header-cell *matHeaderCellDef>Số buổi theo tuần</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.daysOfWeek }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="content">
+              <th mat-header-cell *matHeaderCellDef>Nội dung lịch</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.content }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Trạng thái</th>
+              <td mat-cell *matCellDef="let element">
+                <span [class]="
+                            element.status == 2
+                              ? 'badge badge-warning'
+                              : 'badge badge-primary'
+                          ">
+                  {{ element.status == 2 ? "Chờ xếp lịch" : "Đã xếp lịch" }}
+                </span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="lecturer">
+              <th mat-header-cell *matHeaderCellDef>Giáo viên</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.lecturer.firstName + " " + element.lecturer.lastName }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="languageClass">
+              <th mat-header-cell *matHeaderCellDef>Lớp</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.languageClass.name }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="controls">
+              <th mat-header-cell *matHeaderCellDef>Xóa</th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-icon-button (click)="deleteSchedule(element.id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="scheduledColumns"></tr>
+            <tr mat-row (click)="openUpdateDialog(row)" *matRowDef="let row; columns: scheduledColumns"></tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="pageSizeOptions">
+          </mat-paginator>
+        </mat-card-content>
+      </mat-card>
+
+
+
+
+    </div>
+
+
+  </div>
+</section>

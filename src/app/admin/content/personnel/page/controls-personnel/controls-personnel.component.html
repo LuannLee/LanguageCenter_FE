@@ -1,0 +1,264 @@
+<mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
+
+<section class="content">
+  <div class="container-fluid">
+    <mat-card>
+      <mat-card-header style="text-align: center;">
+        <h3 style="text-align: center; width: 100%;">Thông tin hồ sơ nhân viên</h3>
+      </mat-card-header>
+      <div class="row">
+        <!-- Column 1: phần ảnh -->
+        <div class="col-md-2">
+          <!-- Profile Image -->
+          <div class="card card-primary card-outline">
+            <div class="card-body box-profile">
+              <div class="text-center">
+                <img style="border-radius:50%;" [(src)]="personnel.image" alt="User profile picture"
+                  [width]="getImageWidth()" [height]="getImageHeigth()">
+              </div>
+
+              <h3 class="profile-username text-center">{{ personnel.lastName }}</h3>
+
+              <p class="text-muted text-center">Nhân viên</p>
+
+              <ul class="list-group list-group-unbordered mb-3">
+                <li class="list-group-item">
+                  <b>Facebook</b> <a class="float-right">{{ personnel.facebook }}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Email</b> <a class="float-right">{{ personnel.email }}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>SĐT</b> <a class="float-right">{{ personnel.phone }}</a>
+                </li>
+              </ul>
+              <!-- <app-material-file-upload (complete)="onFileComplete($event)"></app-material-file-upload> -->
+            </div>
+            <!-- /.card-body -->
+          </div>
+
+          <!-- Thông tin thêm -->
+          <mat-card class="card card-primary">
+            <mat-card-header [style.backgroundColor]="''">
+              <mat-card-title>Thông tin thêm</mat-card-title>
+            </mat-card-header>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <strong><i class="fas fa-book mr-1"></i> Chứng chỉ</strong>
+              <p class="text-muted">
+                {{ personnel.certificate }}
+              </p>
+
+              <hr>
+
+              <strong><i class="fas fa-map-marker-alt mr-1"></i> Địa chỉ</strong>
+
+              <p class="text-muted">{{ personnel.address }}</p>
+
+              <hr>
+
+              <strong><i class="far fa-file-alt mr-1"></i> Ghi chú</strong>
+
+              <p class="text-muted">{{ personnel.note }}
+              </p>
+            </div>
+            <!-- /.card-body -->
+          </mat-card>
+        </div>
+
+        <!-- Column 2: phần thông tin -->
+        <div class="col-md-10">
+          <form novalidate [formGroup]="personnelFormGroup" (ngSubmit)="updatePersonnel()"
+            *ngIf="permissionOfFunction.canUpdate">
+            <mat-card>
+              <mat-card-header>
+                <mat-card-title align="start">
+                  <mat-icon>assignment_ind</mat-icon>
+                  Thông tin chung
+                </mat-card-title>
+              </mat-card-header>
+
+              <hr>
+              <div class="row">
+                <div class="col-md-5">
+                  <mat-form-field [floatLabel]='floatLabel' disable>
+                    <mat-label>Mã nhân viên</mat-label>
+                    <input matInput disable [(ngModel)]="personnel.id" formControlName="id" [disabled]="!permissionOfFunction.canUpdate">
+                  </mat-form-field>
+
+                  <mat-form-field [floatLabel]='floatLabel' disable>
+                    <mat-label>Card ID</mat-label>
+                    <input matInput placeholder="Card ID" [(ngModel)]="personnel.cardId" formControlName="cardId" [disabled]="!permissionOfFunction.canUpdate"
+                      disable>
+                  </mat-form-field>
+
+                  <mat-form-field [floatLabel]='floatLabel'>
+                    <mat-label>Họ</mat-label>
+                    <input matInput placeholder="Nhập họ..." required [(ngModel)]="personnel.firstName" [disabled]="!permissionOfFunction.canUpdate"
+                      formControlName="firstName">
+                  </mat-form-field>
+
+                  <mat-form-field [floatLabel]='floatLabel'>
+                    <mat-label>Tên</mat-label>
+                    <input matInput placeholder="Nhập tên..." required [(ngModel)]="personnel.lastName" [disabled]="!permissionOfFunction.canUpdate"
+                      formControlName="lastName">
+                  </mat-form-field>
+
+                  <mat-form-field [floatLabel]='floatLabel'>
+                    <input matInput [matDatepicker]="picker" placeholder="Chọn ngày sinh" [disabled]="!permissionOfFunction.canUpdate"
+                      [(ngModel)]="personnel.birthday" required formControlName="birthday">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi #picker></mat-datepicker>
+                  </mat-form-field>
+
+                  <label>Giới tính: </label>
+                  <mat-radio-group [(ngModel)]="personnel.sex" formControlName="sex" [disabled]="!permissionOfFunction.canUpdate">
+                    <mat-radio-button value="true" [disabled]="!permissionOfFunction.canUpdate">Nam</mat-radio-button>
+                    <mat-radio-button value="false" [disabled]="!permissionOfFunction.canUpdate">Nữ</mat-radio-button>
+                  </mat-radio-group>
+
+                  <mat-form-field [floatLabel]='floatLabel'>
+                    <mat-label>Địa chỉ</mat-label>
+                    <textarea matInput placeholder="Nhập địa chỉ..." cdkTextareaAutosize cdkAutosizeMinRows="3" [disabled]="!permissionOfFunction.canUpdate"
+                      cdkAutosizeMaxRows="3" required [(ngModel)]="personnel.address"
+                      formControlName="address"></textarea>
+                  </mat-form-field>
+
+                  <mat-form-field [floatLabel]='floatLabel'>
+                    <mat-label>Quốc gia</mat-label>
+                    <input matInput placeholder="Nhập quốc gia..." required [(ngModel)]="personnel.nationality" [disabled]="!permissionOfFunction.canUpdate"
+                      formControlName="nationality">
+                  </mat-form-field>
+
+                  <mat-form-field [floatLabel]='floatLabel'>
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="plc@vimaru.edu.vn" required [(ngModel)]="personnel.email" required [disabled]="!permissionOfFunction.canUpdate"
+                      [(ngModel)]="personnel.email" formControlName="email">
+                  </mat-form-field>
+
+                  <mat-form-field [floatLabel]='floatLabel'>
+                    <mat-label>Số liên lạc</mat-label>
+                    <input matInput placeholder="09xx xxx xxx" required [(ngModel)]="personnel.phone" [disabled]="!permissionOfFunction.canUpdate"
+                      formControlName="phone">
+                  </mat-form-field>
+
+                  <mat-form-field [floatLabel]='floatLabel'>
+                    <mat-label>Facebook</mat-label>
+                    <input matInput placeholder="https://www.facebook.com/plc-center || plc-center" [disabled]="!permissionOfFunction.canUpdate"
+                      [(ngModel)]="personnel.facebook" formControlName="facebook">
+                  </mat-form-field>
+
+                  <mat-form-field [floatLabel]='floatLabel'>
+                    <mat-label>Chứng chỉ</mat-label>
+                    <input matInput placeholder="Nhập chứng chỉ" [(ngModel)]="personnel.certificate" [disabled]="!permissionOfFunction.canUpdate"
+                      formControlName="certificate">
+                  </mat-form-field>
+
+                  <mat-form-field [floatLabel]='floatLabel'>
+                    <mat-label>Kinh nghiệm làm việc</mat-label>
+                    <textarea matInput placeholder="Nhập kinh nghiệm làm việc..." cdkTextareaAutosize [disabled]="!permissionOfFunction.canUpdate"
+                      cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" [(ngModel)]="personnel.experienceRecord"
+                      formControlName="experienceRecord"></textarea>
+                  </mat-form-field>
+                </div>
+
+
+                <div class="col-md-1">
+
+                </div>
+
+                <div class="col-md-5">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Chức vụ</mat-label>
+                    <mat-select [(ngModel)]="personnel.position" required style="text-align: center;" required [disabled]="!permissionOfFunction.canUpdate"
+                      formControlName="position">
+                      <mat-option *ngFor="let item of position" [value]="item.name" style="text-align: center;">
+                        {{item.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Tình trạng hôn nhân</mat-label>
+                    <mat-select [(ngModel)]="personnel.marritalStatus" style="text-align: center;" required [disabled]="!permissionOfFunction.canUpdate"
+                      formControlName="marritalStatus">
+                      <mat-option *ngFor="let item of marritalStatus" [value]="item.code" style="text-align: center;">
+                        {{item.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Trạng thái</mat-label>
+                    <mat-select [(ngModel)]="personnel.status" required style="text-align: center;" required [disabled]="!permissionOfFunction.canUpdate"
+                      formControlName="status">
+                      <mat-option *ngFor="let item of status" [value]="item.code" style="text-align: center;">
+                        {{item.name}}
+                      </mat-option>
+                    </mat-select>
+
+                  </mat-form-field>
+
+                  <mat-form-field [floatLabel]='floatLabel'>
+                    <mat-label>Lương cơ bản</mat-label>
+                    <input matInput placeholder="Nhập lương cơ bản" [(ngModel)]="personnel.basicSalary" [disabled]="!permissionOfFunction.canUpdate"
+                      formControlName="basicSalary">
+                  </mat-form-field>
+
+                  <mat-form-field [floatLabel]='floatLabel'>
+                    <mat-label>Phụ cấp</mat-label>
+                    <input matInput placeholder="Nhập phụ cấp" [(ngModel)]="personnel.allowance" [disabled]="!permissionOfFunction.canUpdate"
+                      formControlName="allowance">
+                  </mat-form-field>
+                  <mat-form-field [floatLabel]='floatLabel'>
+                    <mat-label>Thưởng</mat-label>
+                    <input matInput placeholder="Nhập thưởng" [(ngModel)]="personnel.bonus" formControlName="bonus" [disabled]="!permissionOfFunction.canUpdate">
+                  </mat-form-field>
+                  <mat-form-field [floatLabel]='floatLabel'>
+                    <mat-label>Tiền bảo hiểm</mat-label>
+                    <input matInput placeholder="Nhập tiền bảo hiểm" [(ngModel)]="personnel.insurancePremium"
+                      formControlName="insurancePremium" [disabled]="!permissionOfFunction.canUpdate">
+                  </mat-form-field>
+
+
+
+                  <mat-form-field [floatLabel]='floatLabel'>
+                    <mat-label>Ghi chú</mat-label>
+                    <textarea matInput placeholder="Nhập ghi chú liên quan..." cdkTextareaAutosize
+                      cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" [(ngModel)]="personnel.note"
+                      formControlName="note"></textarea>
+                  </mat-form-field>
+
+                </div>
+
+                <div class="col-md-1">
+
+                </div>
+              </div>
+              <hr>
+              <mat-card-footer align="end">
+                <button type="submit" mat-raised-button color="primary" tabindex="-1" style="margin: 1%;"
+                  *ngIf="permissionOfFunction.canUpdate">
+                  <mat-icon>create</mat-icon>
+                  Lưu thay đổi
+                </button>
+                <button type="button" mat-raised-button color="warn" tabindex="-1" style="margin: 1%;"
+                  (click)="delete()" *ngIf="permissionOfFunction.canDelete">
+                  <mat-icon>delete</mat-icon>
+                  Xóa nhân viên
+                </button>
+                <button type="button" mat-raised-button tabindex="-1"
+                  style="margin: 1%; background-color: darkgoldenrod;" (click)="back()">
+                  <mat-icon>cancel</mat-icon>
+                  Quay về
+                </button>
+              </mat-card-footer>
+            </mat-card>
+          </form>
+        </div>
+
+      </div>
+
+    </mat-card>
+  </div>
+</section>

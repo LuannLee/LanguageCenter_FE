@@ -1,0 +1,82 @@
+<h1 mat-dialog-title>Lớp học</h1>
+
+<div mat-dialog-content>
+    <div class="row">
+
+        <mat-form-field appearance="outline">
+            <mat-label>Mã lớp học</mat-label>
+            <input [(ngModel)]="languageClass.id" matInput placeholder="Nhập mã lớp học" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Tên lớp học</mat-label>
+            <input [(ngModel)]="languageClass.name" matInput placeholder="Nhập tên lớp học" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Học phí theo khóa</mat-label>
+            <input [(ngModel)]="languageClass.courseFee" matInput placeholder="Nhập giá" required class="numberStyle">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Học phí theo tháng</mat-label>
+            <input [(ngModel)]="languageClass.monthlyFee" matInput placeholder="Nhập giá" required class="numberStyle">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Học phí theo buổi</mat-label>
+            <input [(ngModel)]="languageClass.lessonFee" matInput placeholder="Nhập giá" required class="numberStyle">
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline">
+            <mat-label>Ngày bắt đầu</mat-label>
+            <input [(ngModel)]="languageClass.startDay" [matDatepicker]="picker1" matInput
+                placeholder="Choose a date start">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Ngày kết thúc</mat-label>
+            <input [(ngModel)]="languageClass.endDay" [matDatepicker]="picker2" matInput
+                placeholder="Choose a date end">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Trạng thái</mat-label>
+            <mat-select [(ngModel)]="languageClass.status" required style="text-align: center;">
+                <mat-option *ngFor="let item of status" [value]="item.value" style="text-align: center;">
+                    {{item.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Khóa học</mat-label>
+            <mat-select [(ngModel)]="languageClass.courseId" required style="text-align: center;">
+                <mat-option *ngFor="let item of courses" [value]="item.id" style="text-align: center;">
+                    {{item.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Ghi chú</mat-label>
+            <textarea [(ngModel)]="languageClass.note" matInput placeholder="Nhập ghi chú" cdkTextareaAutosize
+                cdkAutosizeMinRows="3" cdkAutosizeMaxRows="3"></textarea>
+        </mat-form-field>
+    </div>
+</div>
+
+<mat-dialog-actions align="end">
+    <button type="button" mat-raised-button color="primary" tabindex="-1" (click)="updateLanguageClass()">
+        <mat-icon>check</mat-icon>
+        Update
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">
+        <mat-icon>cancel</mat-icon>
+        Hủy
+    </button>
+</mat-dialog-actions>
